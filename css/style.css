@@ -1,0 +1,789 @@
+/* ============================================================
+   Chirayu Betkekar — portfolio
+   Light editorial / Swiss: hairline rules, mono labels,
+   oversized display type, one accent, no shadows.
+   ============================================================ */
+
+:root {
+  --canvas: #fafaf8;
+  --ink: #111111;
+  --ink-soft: #5a5a55;
+  --rule: #e2e2dc;
+  --rule-strong: #cfcfc7;
+
+  /* Single accent — swap this one line to re-tint the whole site. */
+  --accent: #d6412b;
+
+  --font-display: "Inter Tight", "Segoe UI", sans-serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --shell: 1180px;
+  --gutter: 28px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  /* keep anchored cards clear of the sticky bar */
+  scroll-padding-top: 96px;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+  margin: 0;
+}
+
+p { margin: 0 0 1rem; color: var(--ink-soft); }
+
+a { color: inherit; text-decoration: none; }
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+img { max-width: 100%; display: block; }
+
+.shell {
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--canvas);
+  padding: 12px 20px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.skip-link:focus { left: 0; }
+
+/* ---------- shared type ---------- */
+
+.eyebrow,
+.card-label,
+.num,
+.tag,
+.entry-when,
+.contact-kind,
+.card-index,
+.fw-hint {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.72rem;
+}
+
+.eyebrow {
+  color: var(--ink);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eyebrow .num { color: var(--accent); }
+
+.card-label {
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.lead {
+  font-size: 1.05rem;
+  max-width: 62ch;
+  color: var(--ink-soft);
+}
+
+/* ---------- nav ---------- */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250, 250, 248, 0.88);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s linear, border-color 0.15s linear;
+}
+
+.nav-links .num {
+  color: var(--rule-strong);
+  margin-right: 5px;
+  transition: color 0.15s linear;
+}
+
+.nav-links a:hover,
+.nav-links a.active { color: var(--ink); border-bottom-color: var(--accent); }
+
+.nav-links a:hover .num,
+.nav-links a.active .num { color: var(--accent); }
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  height: 1px;
+  width: 100%;
+  background: var(--ink);
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  padding: 104px 0 96px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* No border here: the headshot is a background-free cutout and is meant to stand
+   on the canvas. The fallback badge below carries its own box. */
+.hero-portrait {
+  position: relative;
+  width: 220px;
+  height: 220px;
+}
+
+.hero-portrait img,
+.portrait-fallback {
+  width: 100%;
+  height: 100%;
+  /* contain, not cover: a cutout carries transparent margins that cover would crop into */
+  object-fit: contain;
+}
+
+.hero-portrait img.is-hidden { display: none; }
+
+.portrait-fallback {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--rule);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 4.2rem;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+
+.portrait-fallback.show { display: flex; }
+
+.hero h1 {
+  font-size: clamp(2.5rem, 6.4vw, 4.6rem);
+  margin-bottom: 28px;
+  max-width: 17ch;
+}
+
+/* One word per line. The global h1 line-height (1.02) is set for a wrapping
+   sentence and lets the p descender in "People." touch the T below it. */
+.hero h1 span {
+  display: block;
+  line-height: 1.06;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero .lead { margin-bottom: 36px; }
+
+.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; }
+
+.btn {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 14px 26px;
+  border: 1px solid var(--ink);
+  transition: background-color 0.15s linear, color 0.15s linear, border-color 0.15s linear;
+}
+
+.btn-solid { background: var(--ink); color: var(--canvas); }
+.btn-solid:hover { background: var(--accent); border-color: var(--accent); }
+
+.btn-line { border-color: var(--rule-strong); color: var(--ink); }
+.btn-line:hover { border-color: var(--ink); }
+
+/* ---------- sections ---------- */
+
+.section {
+  padding: 96px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.section-head { margin-bottom: 64px; }
+
+.section h2 {
+  font-size: clamp(2rem, 4.6vw, 3.2rem);
+  margin-bottom: 20px;
+}
+
+/* ---------- flywheel ---------- */
+
+.flywheel-block {
+  display: grid;
+  grid-template-columns: minmax(280px, 440px) 1fr;
+  gap: 56px;
+  align-items: center;
+  margin: 0 0 72px;
+}
+
+.flywheel {
+  width: 100%;
+  height: auto;
+  /* focus rings must not be clipped */
+  overflow: visible;
+}
+
+.fw-seg {
+  fill: none;
+  stroke: var(--rule-strong);
+  stroke-width: 64;
+  transition: stroke 120ms linear, stroke-width 120ms linear;
+}
+
+.fw-label {
+  fill: var(--ink);
+  font-family: var(--font-mono);
+  /* 12px keeps DELIGHT/ENGAGE inside the band where it curves away —
+     horizontal text across a curved band is constrained by its bbox corners,
+     not its height, so this is tighter than it looks */
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+  transition: fill 120ms linear;
+}
+
+.fw-link { cursor: pointer; outline: none; }
+
+.fw-link:hover .fw-seg,
+.fw-link:focus-visible .fw-seg {
+  stroke: var(--accent);
+  stroke-width: 70;
+}
+
+.fw-link:hover .fw-label,
+.fw-link:focus-visible .fw-label { fill: var(--canvas); }
+
+/* outer customer-state ring + clockwise direction arrows */
+.fw-outer {
+  fill: none;
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+}
+
+.fw-arrow { fill: var(--ink); }
+
+.fw-state {
+  fill: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+/* inner team ring — gaps align radially with the stage gaps */
+.fw-team {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 48;
+}
+
+.fw-team-label {
+  fill: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.fw-hub {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.fw-hub-text {
+  fill: var(--ink);
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.flywheel-block figcaption p:last-child { margin-bottom: 0; }
+
+.fw-hint {
+  color: var(--accent);
+  margin-top: 20px;
+}
+
+/* ---------- project cards ---------- */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.card {
+  padding: 36px 32px;
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+  transition: background-color 180ms linear;
+}
+
+.card:first-child { padding-left: 0; }
+.card:last-child { border-right: none; }
+
+.card-index {
+  color: var(--rule-strong);
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  font-size: 1.28rem;
+  margin-bottom: 18px;
+}
+
+.card p:last-child { margin-bottom: 0; }
+
+/* landing flash after a flywheel jump — a state change, not just motion.
+   Top bar rather than left, so it reads the same on the flush-left first card. */
+.card.is-flash {
+  background: rgba(214, 65, 43, 0.06);
+  box-shadow: inset 0 3px 0 var(--accent);
+}
+
+.card:focus { outline: none; }
+
+.tags, .tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 22px;
+}
+
+.tag {
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
+  padding: 5px 10px;
+  line-height: 1.3;
+}
+
+.tag-accent {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Brands whose own casing is part of the name (n8n) opt out of the uppercasing above. */
+.tag-verbatim {
+  text-transform: none;
+}
+
+/* ---------- timeline ---------- */
+
+.timeline { border-top: 1px solid var(--rule); }
+
+.entry {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 32px;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Logo assets are pre-cropped to their measured content bounds and exported at 3x
+   display size with transparent backgrounds, so the markup just sets a size --
+   no cropping viewport, offsets, or blend modes needed. Regenerate from the
+   originals in this folder if a size changes. */
+.entry-logo,
+.cert-logo { display: block; }
+
+.entry-logo { margin-bottom: 16px; }
+
+.entry-logo img,
+.cert-logo img { display: block; }
+
+.logo-eco img       { width: 48px;    height: 48px; }
+.logo-openexa img   { width: 121px;   height: 43px; }
+.logo-quantiphi img { width: 126px;   height: 24px; }
+
+.logo-uw img        { width: 225px;   height: 49px; }
+.logo-spit img      { width: 225px;   height: 55px; }
+
+.logo-hubspot img   { width: 96.45px; height: 30px; }
+.logo-aws img       { width: 47.66px; height: 30px; }
+.logo-gcp img       { width: 55px;    height: 52px; }
+.logo-tableau img   { width: 116.5px; height: 22px; }
+
+.entry-when {
+  color: var(--ink-soft);
+  margin: 4px 0 0;
+  line-height: 1.7;
+}
+
+.entry-when span {
+  display: block;
+  color: var(--rule-strong);
+}
+
+.entry-body h3 {
+  font-size: 1.28rem;
+  margin-bottom: 14px;
+}
+
+.entry-org {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--accent);
+  margin-top: 8px;
+}
+
+.entry-body li {
+  color: var(--ink-soft);
+  padding-left: 18px;
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.entry-body li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 8px;
+  height: 1px;
+  background: var(--rule-strong);
+}
+
+.education { margin-top: 56px; }
+
+.education .entry-body h3 { font-size: 1.05rem; margin-bottom: 0; }
+
+/* ---------- skills ---------- */
+
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 48px;
+  border-top: 1px solid var(--rule);
+  padding-top: 40px;
+}
+
+.skill-group .card-label { margin-bottom: 18px; }
+
+.skill-group .tag-list { margin-bottom: 0; }
+
+.certs {
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--rule);
+}
+
+.certs .card-label { margin-bottom: 28px; }
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 36px;
+}
+
+/* fixed first row so the rules line up even though logo heights differ */
+.cert-group {
+  display: grid;
+  grid-template-rows: 54px 1fr;
+  gap: 16px;
+}
+
+.cert-group .cert-logo { align-self: center; }
+
+.cert-group .tag-list {
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  width: 100%;
+}
+
+/* ---------- about / contact ---------- */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: start;
+}
+
+.bio { max-width: 60ch; }
+
+.bio p:last-child { margin-bottom: 0; }
+
+.contact-list { border-top: 1px solid var(--rule); }
+
+.contact-list li { border-bottom: 1px solid var(--rule); }
+
+/* icon + text, sized for the narrower right-hand column */
+.contact-list a {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 16px;
+  align-items: center;
+  padding: 20px 0;
+  transition: color 0.15s linear;
+}
+
+.contact-icon,
+.contact-icon img {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.contact-icon img { object-fit: contain; }
+
+.contact-text { display: block; }
+
+.contact-kind {
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.contact-value {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  position: relative;
+  display: inline-block;
+}
+
+.contact-value::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.contact-list a:hover .contact-value,
+.contact-list a:focus-visible .contact-value { color: var(--accent); }
+
+.contact-list a:hover .contact-value::after,
+.contact-list a:focus-visible .contact-value::after { transform: scaleX(1); }
+
+/* ---------- footer ---------- */
+
+.footer {
+  padding: 40px 0 56px;
+}
+
+.footer p {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* ---------- reveal ---------- */
+
+/* Hidden only once JS is confirmed running, so a JS failure can't leave
+   the page blank — the .js class is set by an inline script in <head>. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.js .reveal.in-view {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 900px) {
+  .cert-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+
+  .bio { max-width: 68ch; }
+
+  .flywheel-block {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    justify-items: center;
+  }
+
+  .flywheel { max-width: 400px; }
+
+  .card-grid { border-top: none; }
+
+  .card {
+    padding: 32px 0;
+    border-right: none;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .section, .hero { padding: 64px 0; }
+
+  .cert-grid { grid-template-columns: 1fr; gap: 28px; }
+
+  .section-head { margin-bottom: 44px; }
+
+  .nav-links {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: var(--canvas);
+    border-bottom: 1px solid var(--rule);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.28s ease;
+  }
+
+  .nav-links.open { max-height: 320px; }
+
+  .nav-links a {
+    padding: 16px var(--gutter);
+    border-top: 1px solid var(--rule);
+    border-bottom: none;
+  }
+
+  .nav-toggle { display: flex; }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .entry {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .entry-when span { display: inline; margin-left: 10px; }
+}
+
+@media (max-width: 420px) {
+  :root { --gutter: 20px; }
+}
+
+/* The SVG scales with its viewBox, so at narrow widths the outer state labels
+   would render around 8px. Drop them and let the stage names carry it. */
+@media (max-width: 380px) {
+  .fw-state { display: none; }
+
+  .fw-label { font-size: 18px; }
+  .fw-team-label { font-size: 11px; }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

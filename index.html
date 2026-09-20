@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chirayu Betkekar | Portfolio</title>
+<meta name="description" content="Chirayu Betkekar: presales, value engineering, and GTM systems builder.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=3">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<a class="skip-link" href="#built">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="shell nav-inner">
+    <a href="#top" class="wordmark">Chirayu&nbsp;Betkekar</a>
+    <nav class="nav-links" id="navLinks" aria-label="Sections">
+      <a href="#built" data-nav><span class="num">01</span> What I've Built</a>
+      <a href="#done" data-nav><span class="num">02</span> What I've Done</a>
+      <a href="#know" data-nav><span class="num">03</span> What I Know</a>
+      <a href="#about" data-nav><span class="num">04</span> About Me</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero" id="top">
+    <div class="shell">
+      <div class="hero-grid">
+        <div class="hero-portrait">
+          <img src="assets/headshot.png" alt="Chirayu Betkekar" id="headshotImg"
+               onerror="this.classList.add('is-hidden'); document.getElementById('photoFallback').classList.add('show')">
+          <span class="portrait-fallback" id="photoFallback" aria-hidden="true">CB</span>
+        </div>
+        <div class="hero-body">
+          <p class="eyebrow">Hi, I'm Chirayu</p>
+          <h1><span>People.</span><span>Tech.</span><span>Data.</span></h1>
+          <p class="lead">
+            These three pillars define how I approach every customer conversation and business
+            challenge. I enjoy working at the intersection of customer engagement, technology, and
+            data to help organizations understand complex problems, demonstrate value, and
+            accelerate growth.
+          </p>
+          <div class="hero-cta">
+            <a href="#built" class="btn btn-solid">See what I've built</a>
+            <a href="#about" class="btn btn-line">Say hello</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="built">
+    <div class="shell">
+      <header class="section-head">
+        <p class="eyebrow"><span class="num">01</span> Systems &amp; Automations</p>
+        <h2>What I've Built</h2>
+      </header>
+
+      <figure class="flywheel-block reveal">
+        <svg class="flywheel" viewBox="0 0 480 480" role="group" aria-labelledby="fwTitle fwDesc">
+          <title id="fwTitle">GTM flywheel</title>
+          <desc id="fwDesc">A clockwise loop through three stages: Attract, Engage, and Delight.
+            It turns strangers into prospects, customers, and promoters. Select a stage to jump to
+            the project behind it.</desc>
+
+          <!-- Decorative context: outer customer states, direction arrows, inner team ring.
+               All non-interactive so they never steal a click from the stage segments. -->
+          <g class="fw-static" pointer-events="none" aria-hidden="true">
+            <circle class="fw-outer" cx="240" cy="240" r="192"
+                    stroke-dasharray="380.12 22" stroke-dashoffset="89.52"></circle>
+
+            <polygon class="fw-arrow" points="8,0 -8,-6 -8,6" transform="translate(406.28 144) rotate(60)"></polygon>
+            <polygon class="fw-arrow" points="8,0 -8,-6 -8,6" transform="translate(240 432) rotate(180)"></polygon>
+            <polygon class="fw-arrow" points="8,0 -8,-6 -8,6" transform="translate(73.72 144) rotate(300)"></polygon>
+
+            <!-- on the diagonals at r=228; closer in and the bbox corners
+                 collide with the outer ring -->
+            <text class="fw-state" x="78.78" y="78.78">STRANGERS</text>
+            <text class="fw-state" x="401.22" y="78.78">PROSPECTS</text>
+            <text class="fw-state" x="401.22" y="401.22">CUSTOMERS</text>
+            <text class="fw-state" x="78.78" y="401.22">PROMOTERS</text>
+
+            <circle class="fw-team" cx="240" cy="240" r="88"
+                    stroke-dasharray="178.44 374.48" stroke-dashoffset="-2.93"
+                    transform="rotate(-150 240 240)"></circle>
+            <circle class="fw-team" cx="240" cy="240" r="88"
+                    stroke-dasharray="178.44 374.48" stroke-dashoffset="-2.93"
+                    transform="rotate(-30 240 240)"></circle>
+            <circle class="fw-team" cx="240" cy="240" r="88"
+                    stroke-dasharray="178.44 374.48" stroke-dashoffset="-2.93"
+                    transform="rotate(90 240 240)"></circle>
+
+            <text class="fw-team-label" x="240" y="152">MARKETING</text>
+            <text class="fw-team-label" x="316.2" y="284">SALES</text>
+            <text class="fw-team-label" x="163.8" y="284">SERVICE</text>
+
+            <circle class="fw-hub" cx="240" cy="240" r="52"></circle>
+            <text class="fw-hub-text" x="240" y="240">GTM</text>
+          </g>
+
+          <!-- EDIT ME — to remap a stage, change only the href to another project card id
+               (#p-icp · #p-plg · #p-meddic). Keep the aria-label in sync. -->
+          <a href="#p-icp" class="fw-link" aria-label="Attract: jump to Automated Product Briefs and ICP Definitions">
+            <circle class="fw-seg" cx="240" cy="240" r="150"
+                    stroke-dasharray="304.16 638.32" stroke-dashoffset="-5"
+                    transform="rotate(-150 240 240)"></circle>
+            <text class="fw-label" x="240" y="90">ATTRACT</text>
+          </a>
+
+          <a href="#p-meddic" class="fw-link" aria-label="Engage: jump to MEDDIC Dashboard from Sales Call Transcripts">
+            <circle class="fw-seg" cx="240" cy="240" r="150"
+                    stroke-dasharray="304.16 638.32" stroke-dashoffset="-5"
+                    transform="rotate(-30 240 240)"></circle>
+            <text class="fw-label" x="369.9" y="315">ENGAGE</text>
+          </a>
+
+          <a href="#p-plg" class="fw-link" aria-label="Delight: jump to PLG GTM Workflow">
+            <circle class="fw-seg" cx="240" cy="240" r="150"
+                    stroke-dasharray="304.16 638.32" stroke-dashoffset="-5"
+                    transform="rotate(90 240 240)"></circle>
+            <text class="fw-label" x="110.1" y="315">DELIGHT</text>
+          </a>
+        </svg>
+        <figcaption>
+          <p class="card-label">Why a flywheel, not a funnel</p>
+          <p>I'm a GTM operator who believes go-to-market should work like a flywheel, not a
+            funnel. Funnels pour leads in the top and hope deals fall out the bottom, starting over
+            from zero every quarter. Flywheels keep the momentum going: happy customers become the
+            referrals and proof that bring in the next one.</p>
+          <p>I build systems where sales, marketing, and success stay aligned around that compounding
+            effect, and I spend most of my time hunting down unnecessary friction while leaving room
+            for the judgment sales still requires.</p>
+          <p class="fw-hint" aria-hidden="true">Select a stage →</p>
+        </figcaption>
+      </figure>
+
+      <div class="card-grid">
+
+        <article class="card reveal" id="p-icp" tabindex="-1">
+          <p class="card-index">01</p>
+          <h3>Automated Product Briefs &amp; ICP Definitions</h3>
+          <div class="tags">
+            <span class="tag">Claude</span><span class="tag tag-verbatim">n8n</span><span class="tag">Notion</span>
+          </div>
+          <p class="card-label">Problem</p>
+          <p>Reps burned hours researching prospect companies and drafting ICP docs from scratch, and no two reps produced the same quality of output.</p>
+          <p class="card-label">Solution</p>
+          <p>A chain of Claude agents in n8n: the first visits a company's site and writes a structured product brief, the second turns that into an ICP with buying signals and a scoring guide, then both land as clean, ready-to-use pages in Notion.</p>
+          <p class="card-label">Outcome</p>
+          <p>Turns a multi-hour research task into minutes, and gives every rep the same solid starting point instead of a blank page.</p>
+        </article>
+
+        <article class="card reveal" id="p-plg" tabindex="-1">
+          <p class="card-index">02</p>
+          <h3>PLG GTM Workflow</h3>
+          <div class="tags">
+            <span class="tag">Lead Scoring</span><span class="tag">Automation</span><span class="tag">GTM</span>
+          </div>
+          <p class="card-label">Problem</p>
+          <p>In a self-serve motion, the hard part isn't the outreach: it's knowing who to reach, when, and how.</p>
+          <p class="card-label">Solution</p>
+          <p>Scores each lead on ICP fit and product usage patterns, routes it to the right motion, and hands the rep a note with the context needed to act on it immediately.</p>
+          <p class="card-label">Outcome</p>
+          <p>Less time spent hunting for the right accounts, more time spent on outreach that's already backed by real context.</p>
+        </article>
+
+        <article class="card reveal" id="p-meddic" tabindex="-1">
+          <p class="card-index">03</p>
+          <h3>MEDDIC Dashboard from Sales Call Transcripts</h3>
+          <div class="tags">
+            <span class="tag">Claude</span><span class="tag">HubSpot</span><span class="tag">Sales Ops</span>
+          </div>
+          <p class="card-label">Problem</p>
+          <p>Reps consistently under-document deals after calls, leaving MEDDIC fields empty and CRM data too patchy to act on.</p>
+          <p class="card-label">Solution</p>
+          <p>Claude reads every call transcript, scores each of the six MEDDIC dimensions for confidence and completeness, and writes the results straight into HubSpot as custom fields. No manual entry required.</p>
+          <p class="card-label">Outcome</p>
+          <p>Every deal gets a consistently filled MEDDIC profile, giving managers a real read on qualification quality and how it tracks against deal closure.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="done">
+    <div class="shell">
+      <header class="section-head">
+        <p class="eyebrow"><span class="num">02</span> Experience</p>
+        <h2>What I've Done</h2>
+      </header>
+
+      <div class="timeline">
+
+        <article class="entry reveal">
+          <div class="entry-aside">
+            <span class="entry-logo logo-openexa">
+              <img src="assets/logo-openexa.png" alt="OpenEXA logo">
+            </span>
+            <p class="entry-when">Apr 2026 → Present<span>US, Remote</span></p>
+          </div>
+          <div class="entry-body">
+            <h3>Chief of Staff <span class="entry-org">OpenEXA</span></h3>
+            <ul>
+              <li>Built email outreach automation to scale founder and VC fundraising conversations.</li>
+              <li>Reworked the pitch deck's messaging, talk track, and storyboarding.</li>
+              <li>Built an agentic workflow to demo trading strategies for crypto ETF funds.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="entry reveal">
+          <div class="entry-aside">
+            <span class="entry-logo logo-eco">
+              <img src="assets/logo-eco.png" alt="Ecosystems.io logo">
+            </span>
+            <p class="entry-when">Apr 2026 → Present<span>US, Remote</span></p>
+          </div>
+          <div class="entry-body">
+            <h3>Value Engineer <span class="entry-org">Ecosystems.io</span></h3>
+            <ul>
+              <li>Cut sales cycle time by 25% and grew average deal size 2.5x through value-selling initiatives.</li>
+              <li>Built AI-driven automation for benchmarking reports, discovery research, and business overview briefs.</li>
+              <li>Engineered custom ROI/TCO models in partnership with Sales, Product, Marketing, and Customer Success.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="entry reveal">
+          <div class="entry-aside">
+            <span class="entry-logo logo-quantiphi">
+              <img src="assets/logo-quantiphi.png" alt="Quantiphi logo">
+            </span>
+            <p class="entry-when">Jan 2022 → Mar 2024<span>Mumbai, India</span></p>
+          </div>
+          <div class="entry-body">
+            <h3>Presales Consultant <span class="entry-org">Quantiphi</span></h3>
+            <ul>
+              <li>Translated business requirements into technical solutions, owning scope through delivery.</li>
+              <li>Led GTM for greenfield accounts with packaged offerings, opening pipeline in untapped segments.</li>
+              <li>Closed 30+ Gen AI engagements by aligning Solutions and Marketing on positioning.</li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="timeline education reveal">
+        <article class="entry">
+          <div class="entry-aside">
+            <span class="entry-logo logo-uw">
+              <img src="assets/logo-uw.png" alt="University of Washington logo">
+            </span>
+          </div>
+          <div class="entry-body">
+            <h3>M.S., Business Analytics <span class="entry-org">University of Washington - Foster School of Business, Seattle Washington, US</span></h3>
+          </div>
+        </article>
+        <article class="entry">
+          <div class="entry-aside">
+            <span class="entry-logo logo-spit">
+              <img src="assets/logo-spit.png" alt="Sardar Patel Institute of Technology logo">
+            </span>
+          </div>
+          <div class="entry-body">
+            <h3>B.Tech, Electronics Engineering <span class="entry-org">University of Mumbai - Sardar Patel Institute of Technology, Mumbai, Maharashtra, India</span></h3>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="know">
+    <div class="shell">
+      <header class="section-head">
+        <p class="eyebrow"><span class="num">03</span> Skills</p>
+        <h2>What I Know</h2>
+      </header>
+
+      <div class="skills">
+        <div class="skill-group reveal">
+          <p class="card-label">Technical</p>
+          <ul class="tag-list">
+            <li class="tag">Data Analytics</li>
+            <li class="tag">SQL</li>
+            <li class="tag">Python</li>
+            <li class="tag">APIs</li>
+            <li class="tag tag-verbatim">n8n</li>
+            <li class="tag">Agentic Frameworks</li>
+            <li class="tag">Cloud (AWS, GCP)</li>
+            <li class="tag">HubSpot</li>
+            <li class="tag">Salesforce</li>
+          </ul>
+        </div>
+        <div class="skill-group reveal">
+          <p class="card-label">Business</p>
+          <ul class="tag-list">
+            <li class="tag">Presales Consulting</li>
+            <li class="tag">Go-to-Market</li>
+            <li class="tag">Stakeholder Management</li>
+            <li class="tag">ROI/TCO Modeling</li>
+            <li class="tag">Storytelling</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="certs reveal">
+        <p class="card-label">Certifications</p>
+        <div class="cert-grid">
+
+          <div class="cert-group">
+            <span class="cert-logo logo-hubspot">
+              <img src="assets/logo-hubspot.png" alt="HubSpot">
+            </span>
+            <ul class="tag-list">
+              <li class="tag">Sales Hub</li>
+              <li class="tag">Revenue Operations</li>
+            </ul>
+          </div>
+
+          <div class="cert-group">
+            <span class="cert-logo logo-aws">
+              <img src="assets/logo-aws.png" alt="Amazon Web Services">
+            </span>
+            <ul class="tag-list">
+              <li class="tag">Certified Cloud Practitioner</li>
+              <li class="tag">Associate Data Engineer</li>
+            </ul>
+          </div>
+
+          <div class="cert-group">
+            <span class="cert-logo logo-gcp">
+              <img src="assets/logo-gcp.png" alt="Google Cloud">
+            </span>
+            <ul class="tag-list">
+              <li class="tag">Associate Cloud Engineer</li>
+            </ul>
+          </div>
+
+          <div class="cert-group">
+            <span class="cert-logo logo-tableau">
+              <img src="assets/logo-tableau.png" alt="Tableau">
+            </span>
+            <ul class="tag-list">
+              <li class="tag">Desktop Specialist</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="shell">
+      <header class="section-head">
+        <p class="eyebrow"><span class="num">04</span> About</p>
+        <h2>About Me</h2>
+      </header>
+
+      <div class="about-grid">
+
+        <div class="bio reveal">
+          <p>I've spent the last three-plus years in the space between what a product can technically
+            do and what a business will actually pay for: presales at Quantiphi, value engineering at
+            Ecosystems.io, and now Chief of Staff work at OpenEXA. Presales taught me to run discovery
+            and demos that survive a technical audience. Value engineering taught me to put a
+            defensible number on the outcome. The common thread is translation, turning a capability
+            into a figure a buyer recognizes.</p>
+          <p>That mix is the point. Most people are strong on one side of the table: technical enough
+            to build but not to price it, or commercial enough to sell but lost once the conversation
+            turns to architecture. It's why I build the automation myself instead of scoping it for
+            someone else to hand off, and why the business case underneath it holds up when someone
+            pressure-tests the number. My last few years forced me to hold both at once, sit in a
+            room with engineers and business leadership on the same call and not lose either of
+            them.</p>
+        </div>
+
+        <ul class="contact-list reveal">
+          <li>
+            <a href="https://www.linkedin.com/in/chirayu-betkekar/" target="_blank" rel="noopener noreferrer">
+              <span class="contact-icon"><img src="assets/icon-linkedin.svg" alt="" aria-hidden="true"></span>
+              <span class="contact-text">
+                <span class="contact-kind">LinkedIn</span>
+                <span class="contact-value">/in/chirayu-betkekar</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:chirayubetkekar@gmail.com">
+              <span class="contact-icon"><img src="assets/icon-gmail.svg" alt="" aria-hidden="true"></span>
+              <span class="contact-text">
+                <span class="contact-kind">Gmail</span>
+                <span class="contact-value">chirayubetkekar@gmail.com</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/chirayu-betkekar01" target="_blank" rel="noopener noreferrer">
+              <span class="contact-icon"><img src="assets/icon-github.svg" alt="" aria-hidden="true"></span>
+              <span class="contact-text">
+                <span class="contact-kind">GitHub</span>
+                <span class="contact-value">/chirayu-betkekar01</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="https://public.tableau.com/app/profile/chirayu.betkekar/vizzes" target="_blank" rel="noopener noreferrer">
+              <span class="contact-icon"><img src="assets/logo-tableau-mark.png" alt="" aria-hidden="true"></span>
+              <span class="contact-text">
+                <span class="contact-kind">Tableau Public</span>
+                <span class="contact-value">/chirayu.betkekar</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="shell">
+    <p>Designed &amp; built by Chirayu Betkekar.</p>
+  </div>
+</footer>
+
+<script src="js/main.js?v=3"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+# Working source material. These stay on the local machine: the site does not
+# reference them, and a static host serves anything in the deploy root at a
+# public URL. The Notion export in particular is personal.
+Notion Chirayu Pdf.pdf
+Chirayu.png
+OIP.jpeg
+Hubspot-Flywheel-Explained-768x494.webp
+1720487131212.jpeg
+
+# Unprocessed logo originals. assets/logo-*.png are the cropped exports the site
+# actually uses; these are the raw files they were baked from.
+assets/aws.png
+assets/ecosystems.webp
+assets/gcp.png
+assets/hubspot.png
+assets/openexa.png
+assets/quantiphi.jpg
+assets/spit.png
+assets/spit2.jpg
+assets/tableau.jpg
+assets/uw.png
+
+# OS / editor noise
+Thumbs.db
+desktop.ini
+.DS_Store
+.vercel
