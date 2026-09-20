@@ -135,7 +135,7 @@ img { max-width: 100%; display: block; }
 .wordmark {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 1.3rem;
   letter-spacing: -0.01em;
 }
 
@@ -248,10 +248,10 @@ img { max-width: 100%; display: block; }
   line-height: 1.06;
 }
 
-.hero h1 em {
-  font-style: normal;
-  color: var(--accent);
-}
+/* Purely visual, so a class rather than <em>: "Tech." carries no more emphasis
+   than the words either side of it, and a screen reader should not announce it
+   as though it does. */
+.hero h1 .accent { color: var(--accent); }
 
 .hero .lead { margin-bottom: 36px; }
 

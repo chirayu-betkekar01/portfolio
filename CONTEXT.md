@@ -202,9 +202,13 @@ state change, not a motion-only cue, so it still communicates under `prefers-red
 ## Section content (as paraphrased for the site)
 
 ### Hero
-- Eyebrow: "Hi, I'm Chirayu"
+- No eyebrow. "Hi, I'm Chirayu" was removed 2026-09-20; the hero opens straight on the headline.
+  The name is carried by the nav wordmark (bumped to `1.3rem` at the same time) and the `<title>`.
 - Headline: **"People. Tech. Data."**, set one word per line via three `<span>`s that
-  `.hero h1 span` makes block-level.
+  `.hero h1 span` makes block-level. The middle word carries `class="accent"` for the vermilion.
+  A class, not `<em>`: the color is decorative, and `<em>` would have a screen reader announce
+  emphasis that is not intended. This replaced the `.hero h1 em` rule, dead since the headline
+  stopped being a sentence.
 - Subtext: **the user's own copy, supplied verbatim 2026-09-20, do not reword.** "These three
   pillars define how I approach every customer conversation and business challenge. I enjoy working
   at the intersection of customer engagement, technology, and data to help organizations understand
