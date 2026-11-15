@@ -234,7 +234,7 @@ the segments points to it). `main.js` only reads it, so adding a project to a st
 | Stage | Projects (`data-stage`) | Card ids |
 |---|---|---|
 | Attract | Automated Product Briefs & ICP Definitions; SQL-MQL Jury | `#p-icp`, `#p-jury` |
-| Engage | MEDDIC Dashboard from Sales Call Transcripts; CaseCraft; RFP Bid Qualification | `#p-meddic`, `#p-casecraft`, `#p-rfp` |
+| Engage | Call-to-CRM Agent Pipeline; CaseCraft; RFP Bid Qualification; MEDDIC Dashboard from Sales Call Transcripts | `#p-calltocrm`, `#p-casecraft`, `#p-rfp`, `#p-meddic` |
 | Delight | PLG GTM Workflow | `#p-plg` |
 
 **Interaction:**
@@ -249,7 +249,7 @@ the segments points to it). `main.js` only reads it, so adding a project to a st
   region (`#filterStatus`) announces "Showing 2 Attract projects" and so on.
 - Hover and focus still invert a segment (neutral grey → vermilion, label → white). No lift or glow.
 - **Without JS** the bar is hidden (`.js` gate, like `.reveal`), all cards show, and each segment's
-  `href` (the stage's first card: `#p-icp`, `#p-meddic`, `#p-plg`) still works as a plain jump.
+  `href` (the stage's first card: `#p-icp`, `#p-calltocrm`, `#p-plg`) still works as a plain jump.
 
 **Replaced:** the earlier jump-and-flash behavior (scroll to one card, 2px accent outline for 1.6s)
 and the `.stage-links` rows under the caption, one per project. Filtering covers both, so the
@@ -276,9 +276,11 @@ caption now ends with a one-line hint: "Select a stage to filter the projects be
 - Portrait: 220px, **no border**, `object-fit: contain`. See the headshot note under Logos.
 
 ### 1. What I've Built (from Notion "Systems and Automations")
-Six cards, each with Problem / Solution / Outcome + tech tags and a "How it works" flowchart. Order
-on the page: ICP (01, Attract), SQL-MQL Jury (02, Attract), PLG (03, Delight), MEDDIC (04, Engage),
-CaseCraft (05, Engage; added 2026-11-07), RFP Bid Qualification (06, Engage; added 2026-11-10).
+Seven cards, each with Problem / Solution / Outcome + tech tags and a "How it works" flowchart. Order
+on the page: ICP (01, Attract), SQL-MQL Jury (02, Attract), PLG (03, Delight), Call-to-CRM (04, Engage;
+added 2026-11-14), CaseCraft (05, Engage; added 2026-11-07), RFP Bid Qualification (06, Engage; added
+2026-11-10), MEDDIC (07, Engage). **The Engage order was set by the user on 2026-11-15:** Call-to-CRM,
+CaseCraft, RFP, MEDDIC. Keep it. The list below is numbered by when each card was added, not by page order.
 The SQL-MQL Jury card was added 2026-11-05 and is described at the end of this list.
 
 1. **Automated Product Briefs & ICP Definitions** — tags: Claude Skills, Flask, Notion
@@ -341,7 +343,8 @@ The SQL-MQL Jury card was added 2026-11-05 and is described at the end of this l
      library of 12 drivers (the repo's `docs/value-driver-library.md` calls it "a structured, reusable data
      asset") serves every customer, with only the inputs swapped. Key flowchart node: "Reusable case template".
 
-6. **RFP Bid Qualification** (`#p-rfp`, Engage, added 2026-11-10) — tags: Claude, Next.js, Slack.
+6. **RFP Bid Qualification** (`#p-rfp`, Engage, added 2026-11-10) — tags: Claude, Next.js. (Slack removed from the
+   tag, Solution text and flowchart on 2026-11-15 at the user's request; don't add it back.)
    Links: **Live demo** `https://rfp-bid-qualification.vercel.app/` (confirmed live; serves the
    "Tallyhouse RFP Review" demo sign-in, which lists every demo account so a visitor can click straight
    in) and GitHub `chirayu-betkekar01/rfp-bid-qualification` (public). No walkthrough video yet.
@@ -354,7 +357,7 @@ The SQL-MQL Jury card was added 2026-11-05 and is described at the end of this l
      Have / Optional priority, reads the scoring facts (budget, incumbent, category, users) with quotes,
      and suggests Yes/No/Maybe per item from the 97-row answer library, citing library IDs (stale and
      unprofiled sources flagged). In the Next.js review app (Postgres on Supabase) the proposal manager
-     fixes the list and assigns owners, then sends out; experts get a personal Slack link, see the
+     fixes the list and assigns owners, then sends out; experts get a personal link, see the
      suggestion (never pre-selected), answer with a note on No/Maybe, can forward. `lib/scoring.ts`
      scores 100 points from `config/vendor.yaml` (bid at 65+); out-of-category is an automatic hard
      fail, a mandatory No on a known gap (FedRAMP, on-prem, HIPAA BAA, EU residency, CJIS) is a
@@ -366,8 +369,8 @@ The SQL-MQL Jury card was added 2026-11-05 and is described at the end of this l
      baseline is still an open decision in that repo.
 
 7. **Call-to-CRM Agent Pipeline** (`#p-calltocrm`, Engage, added 2026-11-14) — tags: Claude, Fathom, HubSpot.
-   Links: GitHub `chirayu-betkekar01/call-to-crm` (public). No walkthrough video yet: a Loom is planned
-   (script in that repo's `DEMO.md`); add a "Watch walkthrough" link when it exists.
+   Links: "Watch walkthrough" (Google Drive …/1LnM_1xb4E-TdySxOHEy3QspwrKayqj1M, added 2026-11-15) and
+   GitHub `chirayu-betkekar01/call-to-crm` (public).
    Source: local folder `Desktop\Transcript People Agent` (git remote is the call-to-crm repo). Copy drafted
    from its README and code; the user asked for it to be added in the same format as the other projects.
    - What it does: three independent agents that share a `core/` and pass a JSON handoff file. Agent 1
@@ -578,7 +581,7 @@ Four testing gotchas worth remembering:
   | SQL-MQL Jury | none | not on GitHub (its local folder has a `.env` with live keys; check `.gitignore` before ever publishing it) |
   | CaseCraft | none (has a **Live demo** link instead: case-craft-six.vercel.app) | `chirayu-betkekar01/CaseCraft` |
   | RFP Bid Qualification | none (**Live demo**: rfp-bid-qualification.vercel.app) | `chirayu-betkekar01/rfp-bid-qualification` |
-  | Call-to-CRM Agent Pipeline | none yet (Loom planned) | `chirayu-betkekar01/call-to-crm` |
+  | Call-to-CRM Agent Pipeline | drive …/1LnM_1xb4E-TdySxOHEy3QspwrKayqj1M | `chirayu-betkekar01/call-to-crm` |
 
 - ~~ICP card said n8n~~ **Resolved 2026-11-05:** the user confirmed it's Claude Skills with Flask; the
   card's tags, Solution and flowchart were corrected to match the repo (see What I've Built, item 1).
@@ -590,6 +593,12 @@ Four testing gotchas worth remembering:
 - A **700px+ export of the headshot cutout** (see Headshot: 340px display is under 2x).
 - `verify.py` is referenced throughout this file but is not in the repo. The 2026-11-05 redesign was
   checked with an equivalent 46-check Playwright run (all passing) that also lives outside the repo.
+
+### Closed 2026-11-15
+- Engage cards reordered at the user's request to Call-to-CRM (04), CaseCraft (05), RFP (06), MEDDIC (07).
+  The Engage flywheel link's no-JS href now points to `#p-calltocrm`.
+- Call-to-CRM card got its "Watch walkthrough" link (Google Drive, confirmed public).
+- Slack removed from the RFP card (tag, Solution text, flowchart node).
 
 ### Closed 2026-11-14
 - Call-to-CRM Agent Pipeline added as project 07 (Engage) with a GitHub link and a flowchart. Engage now
