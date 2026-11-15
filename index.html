@@ -548,6 +548,76 @@
           </div>
         </div>
       </article>
+
+      <article class="project reveal" id="p-calltocrm" data-stage="engage">
+        <div class="project-text">
+          <p class="project-meta"><span>07</span><span class="stage-chip">Engage stage</span></p>
+          <h3>Call-to-CRM Agent Pipeline</h3>
+          <div class="project-links">
+            <a class="project-link" href="https://github.com/chirayu-betkekar01/call-to-crm" target="_blank" rel="noopener noreferrer" aria-label="View the Call-to-CRM Agent Pipeline code on GitHub (opens in a new tab)">
+              <img src="assets/icon-github.svg" alt="" aria-hidden="true">GitHub</a>
+          </div>
+          <div class="tags">
+            <span class="tag">Claude</span><span class="tag">Fathom</span><span class="tag">HubSpot</span>
+          </div>
+          <div class="pse">
+            <p class="label">Problem</p>
+            <p>Reps take calls with several stakeholders, but only the person they invited ends up in the CRM. The decision maker who joined from a conference room, or was only mentioned, never gets logged, and nobody labels buying roles by hand.</p>
+          </div>
+          <div class="pse">
+            <p class="label">Solution</p>
+            <p>Three Claude agents work from the Fathom call transcript. The first works out who was really on or named in the call. The second tags Decision Makers, Champions and Blockers from how people behave, keeping a role only when its evidence quote is in the transcript. The third fills in missing contact details and syncs everyone to the deal in HubSpot, without overwriting existing data or creating deals.</p>
+          </div>
+          <div class="pse pse-outcome">
+            <p class="label">Outcome</p>
+            <p>Every call leaves a complete, labeled buying group on the deal with no manual entry from reps, and every role traces back to a line in the transcript.</p>
+          </div>
+        </div>
+        <div class="project-flow">
+          <p class="label">How it works</p>
+          <div class="flow">
+            <div class="node">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+              <span class="node-title">Fathom call transcript</span>
+              <span class="node-sub">Invitees, speakers and everyone mentioned</span>
+            </div>
+            <svg class="flow-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+            <div class="node">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.5A5 5 0 0 1 21 19"/></svg>
+              <span class="node-title">Agent 1 · Who was on the call</span>
+              <span class="node-sub">Including people who were never invited</span>
+            </div>
+            <svg class="flow-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+            <div class="node node-key">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9.5 13.5v.01M14.5 13.5v.01"/></svg>
+              <span class="node-title">Agent 2 · Buying roles</span>
+              <span class="node-sub">Kept only when the evidence quote is in the transcript</span>
+              <span class="node-chips">
+                <span>Decision Maker</span><span>Champion</span><span>Blocker</span>
+              </span>
+            </div>
+            <svg class="flow-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+            <div class="node">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+              <span class="node-title">Agent 3 · Enrich and sync</span>
+              <span class="node-sub">Fills empty fields in HubSpot, never creates deals</span>
+            </div>
+            <svg class="flow-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+            <div class="flow-split">
+              <div class="node">
+                <svg class="icon icon-accent" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+                <span class="node-title">Labeled buying group</span>
+                <span class="node-sub">On the deal, no manual entry</span>
+              </div>
+              <div class="node">
+                <svg class="icon icon-accent" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>
+                <span class="node-title">Traceable roles</span>
+                <span class="node-sub">Each one cites a line from the call</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
 

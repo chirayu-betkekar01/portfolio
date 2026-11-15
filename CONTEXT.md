@@ -365,6 +365,26 @@ The SQL-MQL Jury card was added 2026-11-05 and is described at the end of this l
      a real public RFP; the answer key is the user's own. No time-saved figures: the drafting-time
      baseline is still an open decision in that repo.
 
+7. **Call-to-CRM Agent Pipeline** (`#p-calltocrm`, Engage, added 2026-11-14) — tags: Claude, Fathom, HubSpot.
+   Links: GitHub `chirayu-betkekar01/call-to-crm` (public). No walkthrough video yet: a Loom is planned
+   (script in that repo's `DEMO.md`); add a "Watch walkthrough" link when it exists.
+   Source: local folder `Desktop\Transcript People Agent` (git remote is the call-to-crm repo). Copy drafted
+   from its README and code; the user asked for it to be added in the same format as the other projects.
+   - What it does: three independent agents that share a `core/` and pass a JSON handoff file. Agent 1
+     (attendee reconciler) reads a Fathom or .txt transcript and works out everyone involved: speakers,
+     silent invitees, people who joined uninvited, and people only mentioned. Nicknames are merged, and bots
+     and fictional names are dropped. Agent 2 tags buyer-side people Decision Maker / Champion / Blocker
+     from behavior on the call, and code keeps a role only if its evidence quote is verbatim in the
+     transcript. Agent 3 infers the buyer's domain from invitee emails, fills missing contact fields
+     through a swappable provider (mock by default, Hunter on its free plan, Apollo needs a paid plan),
+     then syncs to HubSpot: dry run by default, fills only empty fields, never creates deals, finds the
+     deal through HubSpot associations, and applies contact-to-deal buying-role labels.
+   - **No metrics on the card, deliberately.** Verified end to end on a seeded HubSpot test portal with a
+     sample transcript and mock enrichment data, so there are no real results to quote. Same rule as
+     SQL-MQL Jury: add numbers only if the user supplies them from a real run.
+   - Flowchart: transcript, then Agent 1, then Agent 2 as the key step (role chips), then Agent 3, then a
+     split into "Labeled buying group" and "Traceable roles". All node labels come from the card's copy.
+
 ### 2. What I've Done (from Notion "Work Experience" + "Education")
 Timeline, most recent first. Each role's heading is the **job title only**: the company name that
 used to follow it (`.role-org`) was removed 2026-11-05 at the user's request, since the logo above
@@ -558,6 +578,7 @@ Four testing gotchas worth remembering:
   | SQL-MQL Jury | none | not on GitHub (its local folder has a `.env` with live keys; check `.gitignore` before ever publishing it) |
   | CaseCraft | none (has a **Live demo** link instead: case-craft-six.vercel.app) | `chirayu-betkekar01/CaseCraft` |
   | RFP Bid Qualification | none (**Live demo**: rfp-bid-qualification.vercel.app) | `chirayu-betkekar01/rfp-bid-qualification` |
+  | Call-to-CRM Agent Pipeline | none yet (Loom planned) | `chirayu-betkekar01/call-to-crm` |
 
 - ~~ICP card said n8n~~ **Resolved 2026-11-05:** the user confirmed it's Claude Skills with Flask; the
   card's tags, Solution and flowchart were corrected to match the repo (see What I've Built, item 1).
@@ -569,6 +590,12 @@ Four testing gotchas worth remembering:
 - A **700px+ export of the headshot cutout** (see Headshot: 340px display is under 2x).
 - `verify.py` is referenced throughout this file but is not in the repo. The 2026-11-05 redesign was
   checked with an equivalent 46-check Playwright run (all passing) that also lives outside the repo.
+
+### Closed 2026-11-14
+- Call-to-CRM Agent Pipeline added as project 07 (Engage) with a GitHub link and a flowchart. Engage now
+  has four projects, so the filter bar reads Engage 4 and All projects 7. HTML only, so no cache-bust
+  (still `?v=15`). Checked with Playwright: zero U+2014 in the card, filter counts, Engage filter, link
+  target, no page errors, and desktop and 390px screenshots.
 
 ### Closed 2026-11-10
 - RFP Bid Qualification added as project 06 (Engage) with Live demo + GitHub links and a flowchart.
