@@ -1,33 +1,50 @@
 /* ============================================================
-   Chirayu Betkekar — portfolio
-   Light editorial / Swiss: hairline rules, mono labels,
-   oversized display type, one accent, no shadows.
+   Chirayu Betkekar: portfolio
+   "Refined Light" (2026-11-05). Same palette and type as the
+   editorial build, restructured into rounded panels and a bento
+   hero, with a flowchart beside every project. One accent.
    ============================================================ */
 
 :root {
-  --canvas: #fafaf8;
-  --ink: #111111;
-  --ink-soft: #5a5a55;
-  --rule: #e2e2dc;
-  --rule-strong: #cfcfc7;
+  /* "Clay & Sand" palette (2026-11-08): warm sand neutrals, terracotta accent. */
+  --canvas: #faf6ef;
+  --surface: #ffffff;
+  --surface-2: #f0e8da;   /* inset panels, pills, flow background */
+  --surface-3: #f6f0e5;   /* cert tiles */
+  --ink: #221a12;
+  --ink-soft: #5d5448;
+  --ink-muted: #978c7d;   /* decorative only (arrows); fails contrast as text */
+  --rule: #e7dfd0;
+  --rule-strong: #d2c7b4;
+  --band: #ebe3d5;        /* idle flywheel segments */
 
-  /* Single accent — swap this one line to re-tint the whole site. */
-  --accent: #d6412b;
+  /* Single accent: swap this one line to re-tint the whole site.
+     It is for fills, icons, large type, and white-on-accent labels (5.6:1).
+     It reads 5.2:1 on the canvas, but keep small text in ink anyway. */
+  --accent: #a94c25;
+  --accent-tint: #f8f1ee;          /* fallback where color-mix is missing */
+  --accent-tint: color-mix(in srgb, var(--accent) 8%, #ffffff);
+  --accent-wash: #f6ebe7;
+  --accent-wash: color-mix(in srgb, var(--accent) 11%, #ffffff);
 
   --font-display: "Inter Tight", "Segoe UI", sans-serif;
   --font-body: "Inter", "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
-  --shell: 1180px;
-  --gutter: 28px;
+  --shell: 1240px;
+  --gutter: 24px;
+
+  --r-xl: 28px;  /* hero, flywheel, project panels */
+  --r-lg: 24px;  /* roles, skills, education */
+  --r-md: 18px;  /* flow nodes, cert tiles, outcome block */
 }
 
 * { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
-  /* keep anchored cards clear of the sticky bar */
-  scroll-padding-top: 96px;
+  /* keep anchored cards clear of the floating nav */
+  scroll-padding-top: 104px;
 }
 
 body {
@@ -42,17 +59,17 @@ body {
 
 h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.025em;
-  line-height: 1.02;
+  line-height: 1.1;
   margin: 0;
 }
 
-p { margin: 0 0 1rem; color: var(--ink-soft); }
+p { margin: 0; }
 
 a { color: inherit; text-decoration: none; }
 
-ul { margin: 0; padding: 0; list-style: none; }
+ul, dl, dd { margin: 0; padding: 0; list-style: none; }
 
 img { max-width: 100%; display: block; }
 
@@ -62,13 +79,19 @@ img { max-width: 100%; display: block; }
   padding: 0 var(--gutter);
 }
 
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+}
+
 .skip-link {
   position: absolute;
   left: -9999px;
   top: 0;
   z-index: 200;
-  background: var(--ink);
-  color: var(--canvas);
+  background: var(--accent);
+  color: #ffffff;
   padding: 12px 20px;
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -76,143 +99,218 @@ img { max-width: 100%; display: block; }
 
 .skip-link:focus { left: 0; }
 
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
 /* ---------- shared type ---------- */
 
+.label,
 .eyebrow,
-.card-label,
-.num,
+.project-meta,
 .tag,
-.entry-when,
+.role-when,
 .contact-kind,
-.card-index,
-.fw-hint {
+.filter-status {
   font-family: var(--font-mono);
   font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+  line-height: 1.4;
 }
+
+.label { color: var(--ink-soft); }
 
 .eyebrow {
-  color: var(--ink);
-  margin-bottom: 28px;
+  font-size: 13px;
+  color: var(--ink-soft);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
-.eyebrow .num { color: var(--accent); }
-
-.card-label {
-  color: var(--accent);
-  margin-bottom: 4px;
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  flex: none;
 }
 
 .lead {
-  font-size: 1.05rem;
-  max-width: 62ch;
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 56ch;
   color: var(--ink-soft);
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.2;
+  transition: background-color 0.15s linear, color 0.15s linear, border-color 0.15s linear;
+}
+
+/* No black fills anywhere (user, 2026-11-05): the primary button is the accent.
+   White on #a94c25 is 5.6:1. */
+.btn-solid { background: var(--accent); color: #ffffff; }
+.btn-solid:hover { background: #8b3e1e; background: color-mix(in srgb, var(--accent) 82%, #000000); }
+
+.btn-line { border-color: var(--rule-strong); color: var(--ink); }
+.btn-line:hover { border-color: var(--ink); }
+
+.btn-icon {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* ---------- nav ---------- */
 
-.nav {
+/* The bar floats: sticky with a gap above, no full-width backing. */
+.site-nav {
   position: sticky;
-  top: 0;
+  top: 12px;
   z-index: 100;
-  background: rgba(250, 250, 248, 0.88);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--rule);
+  margin-top: 20px;
 }
 
-.nav-inner {
+.nav-bar {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
+  gap: 12px;
+  padding: 8px 8px 8px 24px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
 }
 
 .wordmark {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 1.3rem;
+  font-size: 19px;
   letter-spacing: -0.01em;
 }
 
 .nav-links {
   display: flex;
-  gap: 28px;
+  gap: 2px;
 }
 
 .nav-links a {
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
   color: var(--ink-soft);
-  padding: 4px 0;
-  border-bottom: 1px solid transparent;
-  transition: color 0.15s linear, border-color 0.15s linear;
+  transition: background-color 0.15s linear, color 0.15s linear;
 }
 
-.nav-links .num {
-  color: var(--rule-strong);
-  margin-right: 5px;
-  transition: color 0.15s linear;
-}
+.nav-links a:hover { color: var(--ink); }
 
-.nav-links a:hover,
-.nav-links a.active { color: var(--ink); border-bottom-color: var(--accent); }
+.nav-links a.active { color: var(--ink); background: var(--surface-2); }
 
-.nav-links a:hover .num,
-.nav-links a.active .num { color: var(--accent); }
+.nav-cta { padding: 12px 20px; font-size: 14px; }
 
 .nav-toggle {
   display: none;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 6px;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   padding: 0;
-  background: none;
+  background: var(--surface-2);
   border: none;
+  border-radius: 999px;
   cursor: pointer;
 }
 
 .nav-toggle span {
   display: block;
-  height: 1px;
-  width: 100%;
+  height: 1.5px;
+  width: 18px;
   background: var(--ink);
 }
 
-/* ---------- hero ---------- */
+/* ---------- hero (bento) ---------- */
 
-.hero {
-  padding: 104px 0 96px;
-  border-bottom: 1px solid var(--rule);
-}
+.hero { padding-top: 24px; }
 
-.hero-grid {
+.bento {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 40px;
-  align-items: start;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 16px;
 }
 
-/* No border here: the headshot is a background-free cutout and is meant to stand
-   on the canvas. The fallback badge below carries its own box. */
+.hero-main {
+  border-radius: var(--r-xl);
+  padding: 56px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.hero h1 {
+  font-size: clamp(64px, 9vw, 128px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+}
+
+/* One word per line. */
+.hero h1 span { display: block; }
+
+/* Purely visual, so a class rather than <em>: "Tech." carries no more emphasis
+   than the words either side of it, and a screen reader should not announce it
+   as though it does. */
+.hero h1 .accent { color: var(--accent); }
+
+.hero-foot { display: flex; flex-direction: column; gap: 28px; }
+
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.hero-side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* The headshot is a background-free cutout standing on a tinted card.
+   340px is 1.47x of the 500px source: sharp on standard screens, slightly soft
+   on retina. A 700px+ export of the same cutout would fix that with no CSS change. */
 .hero-portrait {
   position: relative;
-  width: 220px;
-  height: 220px;
+  flex: 1 1 auto;
+  min-height: 340px;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--accent-wash);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
-.hero-portrait img,
-.portrait-fallback {
-  width: 100%;
-  height: 100%;
+.hero-portrait img {
+  width: 340px;
+  height: 340px;
   /* contain, not cover: a cutout carries transparent margins that cover would crop into */
   object-fit: contain;
 }
@@ -225,76 +323,61 @@ img { max-width: 100%; display: block; }
   inset: 0;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--rule);
   font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 4.2rem;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  font-size: 5rem;
+  letter-spacing: -0.03em;
   color: var(--accent);
 }
 
 .portrait-fallback.show { display: flex; }
 
-.hero h1 {
-  font-size: clamp(2.5rem, 6.4vw, 4.6rem);
-  margin-bottom: 28px;
-  max-width: 17ch;
+.now-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-xl);
+  padding: 28px;
 }
 
-/* One word per line. The global h1 line-height (1.02) is set for a wrapping
-   sentence and lets the p descender in "People." touch the T below it. */
-.hero h1 span {
-  display: block;
-  line-height: 1.06;
+.now-card .label { margin-bottom: 16px; }
+
+.now-list > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 12px;
+  padding: 12px 0;
 }
 
-/* Purely visual, so a class rather than <em>: "Tech." carries no more emphasis
-   than the words either side of it, and a screen reader should not announce it
-   as though it does. */
-.hero h1 .accent { color: var(--accent); }
+.now-list > div:first-child { padding-top: 0; }
+.now-list > div:last-child { padding-bottom: 0; }
+.now-list > div + div { border-top: 1px solid var(--rule); }
 
-.hero .lead { margin-bottom: 36px; }
-
-.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; }
-
-.btn {
-  font-family: var(--font-mono);
-  font-size: 0.76rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 14px 26px;
-  border: 1px solid var(--ink);
-  transition: background-color 0.15s linear, color 0.15s linear, border-color 0.15s linear;
-}
-
-.btn-solid { background: var(--ink); color: var(--canvas); }
-.btn-solid:hover { background: var(--accent); border-color: var(--accent); }
-
-.btn-line { border-color: var(--rule-strong); color: var(--ink); }
-.btn-line:hover { border-color: var(--ink); }
+.now-list dt { font-weight: 600; }
+.now-list dd { color: var(--ink-soft); }
 
 /* ---------- sections ---------- */
 
-.section {
-  padding: 96px 0;
-  border-bottom: 1px solid var(--rule);
-}
+.section { padding-top: 128px; }
 
-.section-head { margin-bottom: 64px; }
+.section-head { margin-bottom: 40px; }
 
 .section h2 {
-  font-size: clamp(2rem, 4.6vw, 3.2rem);
-  margin-bottom: 20px;
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.035em;
 }
 
 /* ---------- flywheel ---------- */
 
 .flywheel-block {
+  margin: 0;
+  border-radius: var(--r-xl);
+  padding: 40px;
   display: grid;
-  grid-template-columns: minmax(280px, 440px) 1fr;
-  gap: 56px;
+  grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+  gap: 48px;
   align-items: center;
-  margin: 0 0 72px;
 }
 
 .flywheel {
@@ -306,7 +389,7 @@ img { max-width: 100%; display: block; }
 
 .fw-seg {
   fill: none;
-  stroke: var(--rule-strong);
+  stroke: var(--band);
   stroke-width: 64;
   transition: stroke 120ms linear, stroke-width 120ms linear;
 }
@@ -314,7 +397,8 @@ img { max-width: 100%; display: block; }
 .fw-label {
   fill: var(--ink);
   font-family: var(--font-mono);
-  /* 12px keeps DELIGHT/ENGAGE inside the band where it curves away —
+  font-weight: 500;
+  /* 12px keeps DELIGHT/ENGAGE inside the band where it curves away:
      horizontal text across a curved band is constrained by its bbox corners,
      not its height, so this is tighter than it looks */
   font-size: 12px;
@@ -327,14 +411,17 @@ img { max-width: 100%; display: block; }
 
 .fw-link { cursor: pointer; outline: none; }
 
+/* .is-active: the stage the projects are currently filtered to (main.js) */
 .fw-link:hover .fw-seg,
-.fw-link:focus-visible .fw-seg {
+.fw-link:focus-visible .fw-seg,
+.fw-link.is-active .fw-seg {
   stroke: var(--accent);
   stroke-width: 70;
 }
 
 .fw-link:hover .fw-label,
-.fw-link:focus-visible .fw-label { fill: var(--canvas); }
+.fw-link:focus-visible .fw-label,
+.fw-link.is-active .fw-label { fill: #ffffff; }
 
 /* outer customer-state ring + clockwise direction arrows */
 .fw-outer {
@@ -354,10 +441,10 @@ img { max-width: 100%; display: block; }
   dominant-baseline: middle;
 }
 
-/* inner team ring — gaps align radially with the stage gaps */
+/* inner team ring: gaps align radially with the stage gaps */
 .fw-team {
   fill: none;
-  stroke: var(--rule);
+  stroke: var(--surface-2);
   stroke-width: 48;
 }
 
@@ -371,115 +458,322 @@ img { max-width: 100%; display: block; }
 }
 
 .fw-hub {
-  fill: none;
-  stroke: var(--rule);
+  fill: var(--surface);
+  stroke: var(--rule-strong);
   stroke-width: 1;
 }
 
 .fw-hub-text {
   fill: var(--ink);
   font-family: var(--font-display);
-  font-size: 24px;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.01em;
   text-anchor: middle;
   dominant-baseline: middle;
 }
 
-.flywheel-block figcaption p:last-child { margin-bottom: 0; }
-
-.fw-hint {
-  color: var(--accent);
-  margin-top: 20px;
+.flywheel-block figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 17px;
+  min-width: 0;
 }
 
-/* ---------- project cards ---------- */
+.fw-hint { margin-top: 8px; }
 
-.card-grid {
+/* ---------- project filter ---------- */
+
+/* Driven entirely by main.js, so it stays hidden until JS is confirmed running
+   (same .js gate as .reveal). Without JS the segments fall back to plain anchor jumps. */
+.project-filter { display: none; }
+
+.js .project-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-top: 24px;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color 0.15s linear, border-color 0.15s linear;
+}
+
+.filter-btn:hover { border-color: var(--rule-strong); }
+
+/* selected: accent tint and edge, same language as the flowchart key step */
+.filter-btn[aria-pressed="true"] {
+  background: var(--accent-tint);
+  border-color: var(--accent);
+}
+
+.filter-count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.filter-status { color: var(--ink-soft); }
+
+/* ---------- projects ---------- */
+
+.project {
+  margin-top: 24px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 0;
-  border-top: 1px solid var(--rule);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-xl);
+  overflow: hidden;
 }
 
-.card {
-  padding: 36px 32px;
-  border-bottom: 1px solid var(--rule);
-  border-right: 1px solid var(--rule);
-  transition: background-color 180ms linear;
+/* display:grid above would otherwise override the hidden attribute the filter sets */
+.project[hidden] { display: none; }
+
+.project-text {
+  padding: 44px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.card:first-child { padding-left: 0; }
-.card:last-child { border-right: none; }
-
-.card-index {
-  color: var(--rule-strong);
-  margin-bottom: 20px;
+.project-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ink-soft);
 }
 
-.card h3 {
-  font-size: 1.28rem;
-  margin-bottom: 18px;
+.stage-chip {
+  padding: 4px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
 }
 
-.card p:last-child { margin-bottom: 0; }
+.project h3 { font-size: 32px; letter-spacing: -0.025em; }
 
-/* landing flash after a flywheel jump — a state change, not just motion.
-   Top bar rather than left, so it reads the same on the flush-left first card. */
-.card.is-flash {
-  background: rgba(214, 65, 43, 0.06);
-  box-shadow: inset 0 3px 0 var(--accent);
+/* Walkthrough video + GitHub, right under the title. External, so each opens in a new tab. */
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: -6px;  /* sit closer to the title than the 20px column gap */
 }
 
-.card:focus { outline: none; }
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  transition: border-color 0.15s linear, background-color 0.15s linear;
+}
 
-.tags, .tag-list {
+.project-link:hover { border-color: var(--ink); }
+
+.project-link-video {
+  background: var(--accent-tint);
+  border-color: var(--accent);
+}
+
+.project-link-video:hover { border-color: var(--accent); background: var(--accent-wash); }
+
+.project-link img { width: 16px; height: 16px; }
+
+.link-icon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.75;
+  stroke-linejoin: round;
+}
+
+.link-icon path { fill: var(--accent); stroke: none; }
+
+/* line-drawn variant (external-link arrow on "Live demo"), not a filled glyph like the play triangle */
+.link-icon-line path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 22px;
 }
 
 .tag {
-  color: var(--ink-soft);
-  border: 1px solid var(--rule);
-  padding: 5px 10px;
-  line-height: 1.3;
-}
-
-.tag-accent {
-  border-color: var(--accent);
-  color: var(--accent);
+  letter-spacing: 0.04em;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--ink);
 }
 
 /* Brands whose own casing is part of the name (n8n) opt out of the uppercasing above. */
-.tag-verbatim {
-  text-transform: none;
+.tag-verbatim { text-transform: none; }
+
+.pse { display: flex; flex-direction: column; gap: 4px; }
+
+.pse-outcome {
+  padding: 18px 20px;
+  border-radius: var(--r-md);
+  background: var(--accent-tint);
 }
 
-/* ---------- timeline ---------- */
+/* the flowchart */
 
-.timeline { border-top: 1px solid var(--rule); }
-
-.entry {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 32px;
-  padding: 32px 0;
-  border-bottom: 1px solid var(--rule);
+.project-flow {
+  background: var(--surface-2);
+  padding: 44px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
 }
+
+.project-flow > .label { align-self: stretch; }
+
+.flow {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.node {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  color: var(--ink);
+}
+
+.node-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.node-sub {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+/* the step that does the work: accent-tinted with an accent edge, never a black fill */
+.node-key {
+  background: var(--accent-tint);
+  border: 1.5px solid var(--accent);
+  padding: 24px 20px;
+  gap: 8px;
+}
+
+.node-key .node-title { font-size: 21px; }
+.node-key .icon { stroke: var(--accent); }
+
+.node-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 8px;
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.node-chips > span {
+  padding: 7px 12px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+}
+
+.icon,
+.flow-arrow,
+.chip-arrow,
+.contact-arrow {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: none;
+}
+
+.icon { width: 22px; height: 22px; stroke-width: 1.75; }
+
+.icon-accent { stroke: var(--accent); }
+
+.flow-arrow { width: 18px; height: 18px; stroke-width: 2; color: var(--ink-muted); }
+
+.chip-arrow { width: 14px; height: 14px; stroke-width: 2; color: var(--ink-soft); }
+
+.flow-split {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.flow-split .node { flex: 1 1 180px; width: auto; }
+
+/* ---------- experience ---------- */
 
 /* Logo assets are pre-cropped to their measured content bounds and exported at 3x
-   display size with transparent backgrounds, so the markup just sets a size --
+   display size with transparent backgrounds, so the markup just sets a size:
    no cropping viewport, offsets, or blend modes needed. Regenerate from the
    originals in this folder if a size changes. */
 .entry-logo,
 .cert-logo { display: block; }
 
-.entry-logo { margin-bottom: 16px; }
-
 .entry-logo img,
 .cert-logo img { display: block; }
 
+.logo-dbrepublic img { width: 172px; height: 44px; }  /* 317x81 source: 1.84x, full wordmark + rule kept */
 .logo-eco img       { width: 48px;    height: 48px; }
 .logo-openexa img   { width: 121px;   height: 43px; }
 .logo-quantiphi img { width: 126px;   height: 24px; }
@@ -492,189 +786,205 @@ img { max-width: 100%; display: block; }
 .logo-gcp img       { width: 55px;    height: 52px; }
 .logo-tableau img   { width: 116.5px; height: 22px; }
 
-.entry-when {
+.roles { display: flex; flex-direction: column; gap: 12px; }
+
+.role {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 24px 48px;
+  padding: 32px 36px;
+}
+
+.role-aside { display: flex; flex-direction: column; gap: 14px; }
+
+.role-when {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
   color: var(--ink-soft);
-  margin: 4px 0 0;
-  line-height: 1.7;
+  letter-spacing: 0.04em;
 }
 
-.entry-when span {
-  display: block;
-  color: var(--rule-strong);
+.date-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--ink);
 }
 
-.entry-body h3 {
-  font-size: 1.28rem;
-  margin-bottom: 14px;
+.role h3 { font-size: 24px; letter-spacing: -0.02em; margin-bottom: 12px; }
+
+
+.role-body ul {
+  list-style: disc;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.entry-org {
-  display: block;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--accent);
-  margin-top: 8px;
+.role-body li::marker { color: var(--rule-strong); }
+
+.sub-label { margin: 48px 0 16px; }
+
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
-.entry-body li {
-  color: var(--ink-soft);
-  padding-left: 18px;
-  position: relative;
-  margin-bottom: 6px;
+.edu {
+  padding: 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.entry-body li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 12px;
-  width: 8px;
-  height: 1px;
-  background: var(--rule-strong);
-}
+.edu h3 { font-size: 22px; letter-spacing: -0.02em; margin-bottom: 4px; }
 
-.education { margin-top: 56px; }
-
-.education .entry-body h3 { font-size: 1.05rem; margin-bottom: 0; }
+.edu p { color: var(--ink-soft); font-size: 15px; }
 
 /* ---------- skills ---------- */
 
-.skills {
+.skill-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 48px;
-  border-top: 1px solid var(--rule);
-  padding-top: 40px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
-.skill-group .card-label { margin-bottom: 18px; }
+.skill-group { padding: 32px 36px; }
 
-.skill-group .tag-list { margin-bottom: 0; }
+.skill-group .label,
+.certs > .label { margin-bottom: 18px; }
 
-.certs {
-  margin-top: 56px;
-  padding-top: 40px;
-  border-top: 1px solid var(--rule);
+.pill-list { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.pill {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
 }
 
-.certs .card-label { margin-bottom: 28px; }
+.certs { margin-top: 12px; padding: 32px 36px; }
 
 .cert-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 36px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
 }
 
-/* fixed first row so the rules line up even though logo heights differ */
-.cert-group {
-  display: grid;
-  grid-template-rows: 54px 1fr;
+.cert {
+  background: var(--surface-3);
+  border-radius: var(--r-md);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 
-.cert-group .cert-logo { align-self: center; }
+/* fixed logo row so the names line up even though logo heights differ */
+.cert-logo {
+  height: 52px;
+  display: flex;
+  align-items: center;
+}
 
-.cert-group .tag-list {
+.cert ul {
+  display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 0;
-  padding-top: 16px;
-  border-top: 1px solid var(--rule);
-  width: 100%;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
 /* ---------- about / contact ---------- */
 
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 72px;
-  align-items: start;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 12px;
+  align-items: stretch;
 }
 
-.bio { max-width: 60ch; }
+.bio {
+  border-radius: var(--r-xl);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 18px;
+  line-height: 1.65;
+}
 
-.bio p:last-child { margin-bottom: 0; }
+.contact-list { display: flex; flex-direction: column; gap: 10px; }
 
-.contact-list { border-top: 1px solid var(--rule); }
+.contact-list li { flex: 1 1 auto; display: flex; }
 
-.contact-list li { border-bottom: 1px solid var(--rule); }
-
-/* icon + text, sized for the narrower right-hand column */
-.contact-list a {
-  display: grid;
-  grid-template-columns: 24px 1fr;
-  gap: 16px;
+.contact {
+  flex: 1 1 auto;
+  display: flex;
   align-items: center;
-  padding: 20px 0;
-  transition: color 0.15s linear;
+  gap: 16px;
+  padding: 20px 22px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  transition: border-color 0.15s linear, background-color 0.15s linear;
 }
+
+.contact:hover { border-color: var(--ink); }
 
 .contact-icon,
 .contact-icon img {
   display: block;
   width: 24px;
   height: 24px;
+  flex: none;
 }
 
 .contact-icon img { object-fit: contain; }
 
-.contact-text { display: block; }
-
-.contact-kind {
-  color: var(--ink-soft);
-  display: block;
-  margin-bottom: 4px;
+.contact-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
-.contact-value {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  letter-spacing: -0.01em;
-  position: relative;
-  display: inline-block;
-}
+.contact-kind { color: var(--ink-soft); letter-spacing: 0.06em; }
 
-.contact-value::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -4px;
-  height: 1px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.25s ease;
-}
+.contact-value { font-weight: 500; overflow-wrap: anywhere; }
 
-.contact-list a:hover .contact-value,
-.contact-list a:focus-visible .contact-value { color: var(--accent); }
-
-.contact-list a:hover .contact-value::after,
-.contact-list a:focus-visible .contact-value::after { transform: scaleX(1); }
+.contact-arrow { width: 18px; height: 18px; stroke-width: 2; color: var(--ink-soft); }
 
 /* ---------- footer ---------- */
 
-.footer {
-  padding: 40px 0 56px;
+.footer { margin-top: 96px; }
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 28px;
+  padding-bottom: 40px;
+  border-top: 1px solid var(--rule);
+  font-size: 14px;
+  color: var(--ink-soft);
 }
 
-.footer p {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--ink-soft);
-  margin: 0;
-}
+.footer-inner a:hover { color: var(--ink); }
 
 /* ---------- reveal ---------- */
 
 /* Hidden only once JS is confirmed running, so a JS failure can't leave
-   the page blank — the .js class is set by an inline script in <head>. */
+   the page blank: the .js class is set by an inline script in <head>. */
 .js .reveal {
   opacity: 0;
   transform: translateY(16px);
@@ -688,12 +998,14 @@ img { max-width: 100%; display: block; }
 
 /* ---------- responsive ---------- */
 
+@media (max-width: 1000px) {
+  .nav-links a { padding: 10px 12px; }
+}
+
 @media (max-width: 900px) {
-  .cert-grid { grid-template-columns: repeat(2, 1fr); }
+  .bento { grid-template-columns: 1fr; }
 
-  .about-grid { grid-template-columns: 1fr; gap: 48px; }
-
-  .bio { max-width: 68ch; }
+  .hero-portrait { min-height: 300px; }
 
   .flywheel-block {
     grid-template-columns: 1fr;
@@ -703,61 +1015,75 @@ img { max-width: 100%; display: block; }
 
   .flywheel { max-width: 400px; }
 
-  .card-grid { border-top: none; }
+  .project { grid-template-columns: 1fr; }
 
-  .card {
-    padding: 32px 0;
-    border-right: none;
-    padding-left: 0;
-  }
+  .cert-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .about-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 760px) {
-  .section, .hero { padding: 64px 0; }
+  .section { padding-top: 88px; }
 
-  .cert-grid { grid-template-columns: 1fr; gap: 28px; }
+  .nav-bar { padding: 6px 6px 6px 20px; }
 
-  .section-head { margin-bottom: 44px; }
-
-  .nav-links {
-    position: absolute;
-    top: 64px;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    gap: 0;
-    background: var(--canvas);
-    border-bottom: 1px solid var(--rule);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.28s ease;
-  }
-
-  .nav-links.open { max-height: 320px; }
-
-  .nav-links a {
-    padding: 16px var(--gutter);
-    border-top: 1px solid var(--rule);
-    border-bottom: none;
-  }
+  .nav-cta { display: none; }
 
   .nav-toggle { display: flex; }
 
-  .hero-grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-md);
   }
 
-  .entry {
+  .nav-links.open { display: flex; }
+
+  .nav-links a { padding: 14px 16px; border-radius: 12px; }
+
+  .hero-main { padding: 40px 28px; }
+
+  .flywheel-block,
+  .project-text,
+  .project-flow { padding: 32px 24px; }
+
+  .role {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 16px;
+    padding: 28px 24px;
   }
 
-  .entry-when span { display: inline; margin-left: 10px; }
+  .edu-grid,
+  .skill-grid { grid-template-columns: 1fr; }
+
+  .edu,
+  .skill-group,
+  .certs,
+  .bio { padding: 28px 24px; }
+
+  .project h3 { font-size: 26px; }
+}
+
+@media (max-width: 560px) {
+  .cert-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 420px) {
-  :root { --gutter: 20px; }
+  :root { --gutter: 16px; }
+
+  .hero-main { padding: 32px 22px; }
+
+  /* the two agent chips stack here, so the arrow between them turns to point down */
+  .node-chips:has(.chip-arrow) { flex-direction: column; }
+  .chip-arrow { transform: rotate(90deg); }
 }
 
 /* The SVG scales with its viewBox, so at narrow widths the outer state labels

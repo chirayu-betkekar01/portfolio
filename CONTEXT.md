@@ -18,7 +18,7 @@ Source content came from a Notion page (exported as PDF: `Notion Chirayu Pdf.pdf
 |---|---|
 | Content source | Notion page exported to PDF, read and paraphrased |
 | Tech stack | Plain HTML/CSS/JS — no framework, no build step |
-| Visual style | **Light editorial / Swiss** (redesigned — see below) |
+| Visual style | **"Refined Light"** since 2026-11-05: same palette and type as the earlier editorial/Swiss build, restructured into rounded panels with a flowchart per project (see below) |
 | Deployment target | Vercel (static site, zero-config) |
 | Project video links (placeholders in source, no real URLs) | Omitted from the site for now |
 | Missing outcome metric on 1st project (source had `[Time saved, consistency, quality, metrics]`) | Replaced with a qualitative, non-fabricated outcome line |
@@ -27,6 +27,39 @@ Source content came from a Notion page (exported as PDF: `Notion Chirayu Pdf.pdf
 ### Redesign note
 
 An earlier version of this site (still in the sibling folder `Portfolio Website\`, no "2") used a warm-paper palette with large rounded cards, soft drop shadows, and a teal→sand→coral gradient. **That build was deliberately not carried over.** The layout and content are the same; everything visual was rewritten. If you are looking at the old folder, this one supersedes it.
+
+### Redesign 2026-11-05: "Refined Light"
+
+The user asked for a more modern look and "a more visual way to look at my projects", pointing at a
+dark product-page flowchart (icon, bold title, grey subtitle, ↓, highlighted middle card, split into
+two cards). Three directions were mocked up on a design canvas: A "Refined Light", B "Dark Flow" (closest
+to the reference), C "Node Canvas" (n8n-style horizontal pipelines). **The user picked A.**
+
+What changed, what did not:
+- **Content and copy: unchanged.** Every sentence on the old site is still there, verbatim blocks included.
+- **Palette and fonts: unchanged.** Same canvas, ink, soft ink and single vermilion accent; same
+  Inter Tight / Inter / IBM Plex Mono. New surface tokens (`--surface`, `--surface-2`, `--surface-3`)
+  carry the panels.
+- **Structure: new.** Floating pill nav, a bento hero (headline card, portrait card, "Now" card),
+  everything in rounded white panels.
+- **No black fills (user rule, 2026-11-05).** The first build used solid ink (`#111`) for the primary
+  buttons, the "Now" card, the Gmail contact row, the flywheel hub and each flowchart's key step. The
+  user asked for the black fill to go "everywhere, even in the flowcharts". Now: primary buttons and
+  the skip link are vermilion (white text 4.5:1), the Now card and Gmail row are plain white panels,
+  the hub is an outlined circle with ink "GTM", and the key step is accent-tinted with an accent
+  border. Ink stays for text, outlines and the small flywheel arrowheads only. Don't reintroduce
+  ink-filled surfaces.
+- **Projects: new flowcharts.** Each project is a two-column panel: Problem/Solution/Outcome on the
+  left, a vertical "How it works" flowchart on the right. The step that does the work is
+  `.node-key`: accent tint, 1.5px accent border, accent icon. Flowchart node labels ("Company website", "Hours to
+  minutes", the six MEDDIC dimension names) are short phrases condensed from each card's own
+  Solution/Outcome copy; nothing new is claimed.
+- **The flywheel stays.** The user was explicit when two mockups swapped it for stage cards: "The
+  Flywheel is important." Geometry, labels, links and the `.fw-static` click-through are untouched;
+  only colors changed (neutral segments, outlined hub with ink "GTM"). The old "Select a stage →"
+  hint first became `.stage-links` (text links that jumped like the segments); later the same day the
+  segments became a stage **filter** with a filter bar, and the hint came back as one line (see
+  "Stage → project mapping").
 
 ## File structure
 
@@ -52,9 +85,15 @@ No build tooling, no package.json required — deploys to Vercel by pointing it 
 
 ## Design system
 
-- **Palette:** off-white canvas `#fafaf8`, ink `#111111`, soft ink `#5a5a55`, hairline rules `#e2e2dc` / `#cfcfc7`. A **single** accent, vermilion `#d6412b` — defined once as `--accent`, so changing that one line re-tints the whole site.
+- **Palette ("Clay & Sand", since 2026-11-08):** sand canvas `#faf6ef`, white panels, inset sand `#f0e8da`, warm ink `#221a12`, soft ink `#5d5448`, rules `#e7dfd0` / `#d2c7b4`, idle flywheel band `--band` `#ebe3d5`. A **single** accent, terracotta `#a94c25`, defined once as `--accent`; its tints are `color-mix()`es of it. The favicon carries the same colors. Chosen from a seven-theme lab (current vermilion, Cobalt, Forest, Teal, Plum, Clay & Sand, Rose), all light; dark themes were ruled out by the user. Previous palette: canvas `#fafaf8`, ink `#111111`, vermilion `#d6412b`.
 - **Fonts:** "Inter Tight" (display headings, tight leading, negative tracking) + "Inter" (body) + "IBM Plex Mono" (eyebrows, section numerals, dates, tags), loaded via Google Fonts.
-- **Shape language:** no border-radius, no drop shadows. Structure comes from 1px hairline rules and whitespace. Sections are separated by rules rather than alternating background fills; every section is numbered `01`–`04` in mono.
+- **Shape language (since 2026-11-05):** rounded white panels with a 1px hairline border on the
+  off-white canvas, radii from tokens (`--r-xl` 28px hero/flywheel/projects, `--r-lg` 24px, `--r-md`
+  18px nodes and tiles), pills at 999px. Still **no drop shadows**. Every section eyebrow is numbered
+  `01`–`04` in mono behind a small accent dot. (Before the redesign: no radius at all, structure from
+  hairline rules only.)
+- **Accent contrast:** `#a94c25` is 5.2:1 on the canvas and white on it is 5.6:1 (vermilion was 4.3 and 4.5).
+  Small text still stays in ink. The accent is for fills, icons, the large "Tech." and white-on-accent labels.
 - **Motion:** restrained. Scroll-reveal (fade + 16px translate) via `IntersectionObserver`, smooth-scroll nav with active-link highlighting, and flat color transitions on hover. No lift, no scale, no glow.
 - **Cache busting:** `css/style.css` and `js/main.js` are linked with a `?v=N` query. Bump it when
   iterating — without it a browser will happily serve a stale stylesheet, which cost a review cycle
@@ -70,7 +109,11 @@ No build tooling, no package.json required — deploys to Vercel by pointing it 
   produces comma splices. `verify.py` asserts zero U+2014 across all four surfaces so the rule
   cannot decay. Code comments are explicitly out of scope and still contain a few.
 - **Progressive enhancement:** `.reveal` elements are only hidden under a `.js` class set by an inline script in `<head>`. If JS fails to load, the page renders fully visible instead of blank.
-- **Responsive:** the four outer state labels are hidden below 380px (they'd render at ~8px); hamburger nav under ~760px; flywheel stacks above its caption under 900px; timeline/contact two-column grids collapse to one column; label sizes step down under 420px.
+- **Responsive:** under 900px the bento hero, flywheel block, project panels and about grid stack to
+  one column and certs go 2-up; under 760px the pill nav collapses to a hamburger dropdown (the "Say
+  hello" button hides; About Me is in the menu) and roles/education/skills go single column; certs go
+  1-up under 560px; under 420px the two agent chips in project 01 stack with a downward arrow; the
+  four outer state labels are hidden below 380px (they'd render at ~8px).
 
 ## The flywheel (What I've Built)
 
@@ -128,7 +171,7 @@ decorations first, the three `<a>` groups last.
 
 ## Logos (experience, education, certifications)
 
-Nine logos: three companies, two schools, four certification vendors. The sources were wildly
+Ten logos: four companies, two schools, four certification vendors. The sources were wildly
 inconsistent — different aspect ratios, some with baked-in white or navy backgrounds, two with
 taglines that turn to smudges at small sizes.
 
@@ -153,12 +196,13 @@ Notable per-logo decisions:
 | Tableau | the **"+ableau" wordmark only** — including the decorative plus-cluster squeezed the wordmark to ~9px cap height |
 | OpenEXA | was white-on-navy; the knockout **bakes it to ink on transparent**, so it renders monochrome by nature of the source |
 | SPIT | user supplied a replacement image with the wordmark beside the crest; used at full width, text kept (225x55) |
+| Database Republic | grey two-line wordmark on white (`assets/dbrepublic.png`, 364x118, gitignored original). Cropped to content (317x81) and white knocked out to transparency **in headless Chromium** (no image library on this machine), **whole lockup kept, dashed rule included**. Shown at 172x44: only 1.84x, because the source is small. A larger logo file would sharpen it |
 
 ### Headshot
-`assets/headshot.png`, shown at 220px in the hero. **Background-free cutout**, which is why
-`.hero-portrait` carries no border and uses `object-fit: contain`: a cutout is meant to stand on the
-canvas, and `cover` would crop into its transparent margins. The border lives on
-`.portrait-fallback` instead, because the `CB` badge *is* a framed badge.
+`assets/headshot.png`, shown at **340px** standing on an accent-tinted card in the bento hero
+(since 2026-11-05; 220px before). **Background-free cutout**, which is why it uses
+`object-fit: contain`: `cover` would crop into its transparent margins. The `CB` fallback badge now
+sits inside the same tinted card, so it no longer needs its own border.
 
 **Delivered 2026-09-20.** Chirayu cut it out himself and supplied `Chirayu.png` in the repo root;
 it was copied to `assets/headshot.png` unmodified. 500x500 RGBA, verified transparent by sampling
@@ -167,8 +211,10 @@ channel can be fully opaque). Corners read alpha 0, roughly half the pixels are 
 opaque corner is the jacket shoulder reaching the frame edge. The original studio source
 (`1720487131212.jpeg`, 800x800 on a grey gradient) is still in the root.
 
-500px against a 220px box is 2.27x, over the 2x floor the suite enforces but under the 3x the logo
-assets use. Fine at this size; if the portrait is ever enlarged, ask for a larger export.
+500px against the 340px box is **1.47x, under the 2x floor**. At 250px (which held 2x) the head sat
+small in a large empty card, so the size won and the trade-off is recorded here: sharp on standard
+screens, slightly soft on retina. **Open item: ask for a 700px+ export of the same cutout**; dropping
+it in needs no CSS change.
 
 The inline `onerror` on the `img` still falls back to the `CB` badge, and `verify.py` branches on
 `HEADSHOT.exists()`, so both paths stay tested.
@@ -180,24 +226,35 @@ logo bigger — do not drop the name.
 `OIP.jpeg` in the repo root is an unused duplicate of the eco mark (left in place; it is the user's
 file to remove).
 
-**Stage → project mapping.** This lives in `index.html`, on each segment's `href` — one obvious edit
-site, marked with an `EDIT ME` comment. `main.js` only performs the jump; it never decides the
-destination. To remap a stage, change only the `href` (and keep its `aria-label` in sync):
+**Stage → project mapping: a filter, since 2026-11-05.** The user asked for the stages to *filter* the
+projects, with a way back to all of them. Which stage a project belongs to lives on the card itself,
+as `data-stage` on each `article.project` — that is the one edit site (the `EDIT ME` comment above
+the segments points to it). `main.js` only reads it, so adding a project to a stage needs no JS change.
 
-| Stage | Links to | Card id |
+| Stage | Projects (`data-stage`) | Card ids |
 |---|---|---|
-| Attract | Automated Product Briefs & ICP Definitions | `#p-icp` |
-| Engage | MEDDIC Dashboard from Sales Call Transcripts | `#p-meddic` |
+| Attract | Automated Product Briefs & ICP Definitions; SQL-MQL Jury | `#p-icp`, `#p-jury` |
+| Engage | MEDDIC Dashboard from Sales Call Transcripts; CaseCraft; RFP Bid Qualification | `#p-meddic`, `#p-casecraft`, `#p-rfp` |
 | Delight | PLG GTM Workflow | `#p-plg` |
 
-Note this is **deliberately not** the order the cards appear in, which is exactly why the mapping is
-data-driven rather than positional. An unknown id falls through to normal anchor behavior rather than
-throwing.
+**Interaction:**
+- Clicking a segment (`.fw-link[data-stage]`) hides every card of another stage (`hidden` attribute;
+  `.project[hidden]` needs its own `display: none` because `.project` sets `display: grid`), keeps
+  that segment red (`.is-active`), scrolls the filter bar into view and moves focus to the matching
+  filter button, so keyboard users are one Tab from the cards. Clicking the active segment again
+  shows all projects.
+- The **filter bar** (`#projectFilter`, between the flywheel panel and the cards) has buttons for
+  All projects, Attract, Engage and Delight, each with a count that `main.js` computes from
+  `data-stage`. Buttons are `aria-pressed` toggles. **"All projects" is the way back.** A polite live
+  region (`#filterStatus`) announces "Showing 2 Attract projects" and so on.
+- Hover and focus still invert a segment (neutral grey → vermilion, label → white). No lift or glow.
+- **Without JS** the bar is hidden (`.js` gate, like `.reveal`), all cards show, and each segment's
+  `href` (the stage's first card: `#p-icp`, `#p-meddic`, `#p-plg`) still works as a plain jump.
 
-**Interaction** — hover/focus inverts the segment (hairline grey → vermilion, label → canvas white)
-rather than lifting or glowing. Clicking scrolls the target card into view, moves focus to it, and
-flashes a tinted background with a 3px accent bar along its top edge for ~1.6s. The flash is a color
-state change, not a motion-only cue, so it still communicates under `prefers-reduced-motion`.
+**Replaced:** the earlier jump-and-flash behavior (scroll to one card, 2px accent outline for 1.6s)
+and the `.stage-links` rows under the caption, one per project. Filtering covers both, so the
+caption now ends with a one-line hint: "Select a stage to filter the projects below". Card numbers
+(01–04) stay fixed when filtered.
 
 ## Section content (as paraphrased for the site)
 
@@ -219,11 +276,21 @@ state change, not a motion-only cue, so it still communicates under `prefers-red
 - Portrait: 220px, **no border**, `object-fit: contain`. See the headshot note under Logos.
 
 ### 1. What I've Built (from Notion "Systems and Automations")
-Three cards, each with Problem / Solution / Outcome + tech tags:
+Six cards, each with Problem / Solution / Outcome + tech tags and a "How it works" flowchart. Order
+on the page: ICP (01, Attract), SQL-MQL Jury (02, Attract), PLG (03, Delight), MEDDIC (04, Engage),
+CaseCraft (05, Engage; added 2026-11-07), RFP Bid Qualification (06, Engage; added 2026-11-10).
+The SQL-MQL Jury card was added 2026-11-05 and is described at the end of this list.
 
-1. **Automated Product Briefs & ICP Definitions** — tags: Claude, n8n, Notion
+1. **Automated Product Briefs & ICP Definitions** — tags: Claude Skills, Flask, Notion
+   (repo `icp-product-workstation`)
    - Problem: Reps burned hours researching prospect companies and drafting ICP docs from scratch, with inconsistent quality across reps.
-   - Solution: A chain of Claude agents in n8n — one drafts a structured product brief from a company's website, a second infers an ICP (signals + scoring guide) from it — writing clean pages straight into Notion.
+   - Solution (**corrected 2026-11-05**): two Claude Skills behind a Flask workstation. One turns a
+     company's website into a product brief, the next turns that brief into an ICP with buyer
+     personas, and each draft is reviewed and edited (by hand or with AI) before it's pushed to Notion.
+     The card used to say "a chain of Claude agents in n8n" with an ICP of "buying signals and a
+     scoring guide", carried over from the Notion source. The user confirmed the repo is right: it's
+     Claude Skills with Flask, no n8n. Flowchart: Company website → Two Claude Skills (key step) →
+     Review in the Flask workstation → Notion pages (Product Briefs and ICP Summaries) + Hours to minutes.
    - Outcome: Multi-hour research task cut to minutes; every rep starts from the same solid baseline instead of a blank page.
 
 2. **PLG GTM Workflow** — tags: Lead Scoring, Automation, GTM
@@ -236,14 +303,83 @@ Three cards, each with Problem / Solution / Outcome + tech tags:
    - Solution: Claude reads every call transcript, scores each of the six MEDDIC dimensions for confidence/completeness, writes results into HubSpot as custom fields — no manual entry.
    - Outcome: Every deal gets a consistently filled MEDDIC profile; managers get a real read on qualification quality vs. deal closure.
 
-### 2. What I've Done (from Notion "Work Experience" + "Education")
-Timeline, most recent first:
+4. **SQL-MQL Jury** (`#p-jury`, Attract) — tags: Claude, HubSpot, Python. Title shortened from
+   "SQL-MQL Jury: Why Sales Rejects MQLs" and Problem/Solution/Outcome trimmed to match the other
+   cards' length, both at the user's request (2026-11-05).
+   Source: the user's own project at `Desktop\SQL-MQL Jury` (Python CLI + small Flask UI). Copy was
+   drafted from reading its README and code (`analyze/adjudicate.py`, `agent_tools.py`,
+   `synthesize.py`, `stats.py`, `redact.py`), and the user asked for it to be added directly.
+   - What the code does: extracts the MQL cohort and rejection records from HubSpot, redacts PII from
+     rep notes, computes rejection rates by source and rep (z-score outliers) and time-to-rejection,
+     then a Claude agent (via OpenRouter, max 3 tool calls per case) labels each rejection as
+     `mql_definition_issue`, `sales_inconsistency`, `process_timing_issue` or `legitimate_rejection`,
+     calling `get_engagement_timeline`, `get_deal_notes` or `get_company_firmographics` when unsure. A
+     second Claude call writes the executive summary and recommendations.
+   - **No metrics on the card, deliberately.** Every run so far is on a seeded HubSpot test portal
+     (`scripts/seed_dev_data.py` plants storylines), so its numbers (e.g. 62.5% paid-search rejection)
+     are demo data. The Outcome describes what the tool delivers, not results. Add real numbers only
+     if the user supplies them from a production run.
 
-- **Chief of Staff — OpenEXA** · Apr 2026 → Present · US, Remote
+5. **CaseCraft** (`#p-casecraft`, Engage, added 2026-11-07) — tags: Claude, React, FastAPI.
+   Links: **Live demo** `https://case-craft-six.vercel.app/` (user-supplied; confirmed live, `/api/library`
+   serves all 12 drivers) and GitHub `chirayu-betkekar01/CaseCraft`. No walkthrough video exists. The live
+   demo button reuses the accent-tinted `.project-link-video` style with a line-drawn external-link icon
+   (`.link-icon-line`).
+   Source: local folder `Desktop\GTM Business Case Project` (git remote is the CaseCraft repo, in sync).
+   Copy drafted from its README, docs and `value_drivers.yaml`; the user asked for it to be added.
+   - What it does: a rep enters deal basics and picks from 12 value drivers (Cost Savings, Productivity
+     Gains, Risk Reduction; built around a security platform, vendor-neutral as "the Platform"). A
+     deterministic Python calculator registry recomputes ROI, payback, TCO and a cash-flow curve on
+     every input change with no LLM. Claude (Opus via OpenRouter) is used only to read a pasted or
+     uploaded call transcript and suggest drivers with the verbatim supporting line. One-page PDF export.
+   - "Minutes instead of days" in the Outcome is the README's own claim ("CaseCraft compresses that to
+     minutes"). No other figures; all numeric defaults in the app are illustrative.
+   - Not built yet (per README): company lookup and an LLM-written narrative.
+   - Messaging (rewritten 2026-11-07, user-directed): seller-first framing around the champion and the CFO.
+     The AI is positioned as reading transcript context to speed up the build, and the card deliberately does
+     not sell "AI makes the numbers" or "no AI in the math". Templating is a talking point: one reusable
+     library of 12 drivers (the repo's `docs/value-driver-library.md` calls it "a structured, reusable data
+     asset") serves every customer, with only the inputs swapped. Key flowchart node: "Reusable case template".
+
+6. **RFP Bid Qualification** (`#p-rfp`, Engage, added 2026-11-10) — tags: Claude, Next.js, Slack.
+   Links: **Live demo** `https://rfp-bid-qualification.vercel.app/` (confirmed live; serves the
+   "Tallyhouse RFP Review" demo sign-in, which lists every demo account so a visitor can click straight
+   in) and GitHub `chirayu-betkekar01/rfp-bid-qualification` (public). No walkthrough video yet.
+   Source: local folder `Desktop\RFP Project` (v1, deployed 2026-11-10). Copy drafted from its git
+   history and `web/README.md`. Its own `CLAUDE.md` is the **original week-by-week plan** (draft answers,
+   Checkpoints A-D, planted errors, Word/Excel export) and is out of date: v1 pivoted to bid
+   qualification, so don't take claims from it without checking the code.
+   - What v1 does: a Python pipeline parses the RFP PDF with section/page refs; Claude (Sonnet via
+     OpenRouter, zero-retention routing) extracts one line item per obligation with a Mandatory / Good to
+     Have / Optional priority, reads the scoring facts (budget, incumbent, category, users) with quotes,
+     and suggests Yes/No/Maybe per item from the 97-row answer library, citing library IDs (stale and
+     unprofiled sources flagged). In the Next.js review app (Postgres on Supabase) the proposal manager
+     fixes the list and assigns owners, then sends out; experts get a personal Slack link, see the
+     suggestion (never pre-selected), answer with a note on No/Maybe, can forward. `lib/scoring.ts`
+     scores 100 points from `config/vendor.yaml` (bid at 65+); out-of-category is an automatic hard
+     fail, a mandatory No on a known gap (FedRAMP, on-prem, HIPAA BAA, EU residency, CJIS) is a
+     *possible* hard fail the manager confirms. The manager records bid/no-bid with a written reason.
+   - The vendor (Tallyhouse CRM) is fictional; the card doesn't name it.
+   - Outcome metric: "96% of the requirements in a 94-row answer key" is the Tulsa eval run in
+     `eval/runs.csv` (recall 0.9574, extract prompt v4, 90 of 94 key rows matched). Tulsa RFP 26-901 is
+     a real public RFP; the answer key is the user's own. No time-saved figures: the drafting-time
+     baseline is still an open decision in that repo.
+
+### 2. What I've Done (from Notion "Work Experience" + "Education")
+Timeline, most recent first. Each role's heading is the **job title only**: the company name that
+used to follow it (`.role-org`) was removed 2026-11-05 at the user's request, since the logo above
+the dates already names the company (and its alt text carries the name for screen readers).
+
+- **AI Consultant — Database Republic** · Aug 2026 → Present · US, Remote (added 2026-11-05;
+  **bullets are the user's own copy, verbatim**. Supplied as "Aug. 2026 – Current", normalized to the
+  site's "Aug 2026 → Present" date-pill format. Also listed first in the hero "Now" card.)
+  - Architected event-driven automation pipelines in n8n, integrating client systems through REST APIs and webhooks with custom Python steps, cutting admin effort from 3 hours to 10 minutes.
+  - Embedded LLM APIs (OpenAI, Claude) to draft personalized follow-ups, lifting inbound conversion.
+- **Chief of Staff — OpenEXA** · Apr 2026 → Jul 2026 · US, Remote (end date supplied 2026-11-05)
   - Built email outreach automation to scale founder/VC fundraising conversations.
   - Reworked the pitch deck's messaging, talk track, and storyboarding.
   - Built an agentic workflow to demo trading strategies for crypto ETF funds.
-- **Value Engineer — Ecosystems.io** · Apr 2026 → Present · US, Remote
+- **Value Engineer — Ecosystems.io** · Jul 2025 → Apr 2026 · US, Remote (dates corrected 2026-11-05; previously shown as Apr 2026 → Present)
   - Cut sales cycle time 25%, grew average deal size 2.5x through value-selling.
   - Built AI-driven automation for benchmarking reports, discovery research, business overview briefs.
   - Engineered custom ROI/TCO models with Sales, Product, Marketing, Customer Success.
@@ -260,11 +396,12 @@ Education (no years shown — deliberately removed; institution lines are fixed 
 - **Technical:** Data Analytics, SQL, Python, APIs, n8n, Agentic Frameworks, Cloud (AWS, GCP), HubSpot, Salesforce
 - **Business:** Presales Consulting, Go-to-Market, Stakeholder Management, ROI/TCO Modeling, Storytelling
 
-  Note: tags are CSS-uppercased site-wide, so **"n8n" renders as "N8N"** — restoring the lowercase
-  stylization would mean exempting that one tag from `text-transform`. "Modeling" uses the American
-  spelling to match the rest of the site.
-- **Certifications:** their own full-width block below Technical/Business, as four per-vendor
-  mini-sections (logo, hairline rule, then neutral outlined tags). Vendor prefixes are dropped from
+  Note: since 2026-11-05 skills render as sentence-case `.pill`s, not uppercase `.tag`s, so "n8n"
+  keeps its casing naturally. Project tech tags are still uppercase `.tag`s; no project tag currently
+  needs `.tag-verbatim` (n8n left the ICP card when it was corrected), but the class stays for the next
+  brand whose casing matters. "Modeling" uses the American spelling to match the rest of the site.
+- **Certifications:** their own full-width panel below Technical/Business, as four per-vendor
+  tiles (logo in a fixed 52px row, then the cert names as plain text). Vendor prefixes are dropped from
   the cert names because the logo carries them. HubSpot is first, as requested.
 
   | Vendor | Certifications |
@@ -274,8 +411,8 @@ Education (no years shown — deliberately removed; institution lines are fixed 
   | GCP | Associate Cloud Engineer |
   | Tableau | Desktop Specialist |
 
-  Cert tags use the **neutral** hairline border, not the vermilion `tag-accent` — with four colored
-  logos in the row, six vermilion pills competed with them.
+  Cert names stay **neutral** (no vermilion): with four colored logos in the row, accent-colored
+  names competed with them.
 
 ### 4. About Me (from Notion "Contact", renamed and expanded)
 Section id is `#about`. Eyebrow reads `04 ABOUT`.
@@ -287,7 +424,12 @@ hero announces the three and the bio carries the substance without repeating the
    Chief of Staff at OpenEXA, closing on the translation theme.
 2. "That mix is the point..." on holding the technical and commercial sides at once.
 
-**Both are the user's copy as supplied 2026-09-20. Do not reword.** Longer drafts on cloud/AI and on
+**Both are the user's copy as supplied 2026-09-20. Do not reword.** One approved revision since: on
+2026-11-05 paragraph 1 was updated for Database Republic (option "B" of two drafts, chosen by the
+user): the role list now ends "Chief of Staff work at OpenEXA, and now AI consulting at Database
+Republic", and a sentence was added after the value-engineering line: "Consulting is where I build it
+end to end: automation pipelines that connect a client's systems, with LLMs drafting the follow-ups."
+Paragraph 2 is untouched. The current text is again verbatim, approved copy. Longer drafts on cloud/AI and on
 the UW Foster M.S. were written here and then cut by him; the site is deliberately shorter than what
 was drafted. Resist re-adding that material. The technical ground it covered is already on the page
 in the Skills and Certifications sections.
@@ -403,12 +545,62 @@ Four testing gotchas worth remembering:
 - A **light-background OpenEXA logo** would let it render in color (it is monochrome by nature of the white-on-navy source).
 - Quantiphi's "Solving What Matters" tagline is still cropped off — a tagline rather than the company name, and unreadable at 24px.
 
-- Real video-walkthrough links for the 3 "What I've Built" projects, if/when available.
+- ~~Real video-walkthrough links~~ **Done 2026-11-05.** Each card with a public repo now has a
+  `.project-links` row directly under its `h3`: "Watch walkthrough" (Google Drive video, accent-tinted)
+  and "GitHub" (the repo). Links were taken from each repo's own README and confirmed to load without
+  a login. All open in a new tab with `rel="noopener noreferrer"` and a descriptive `aria-label`.
+
+  | Card | Video | Repo |
+  |---|---|---|
+  | ICP | drive …/19kLitw8x6sduKSRzboefs_cK5NU4p4Pf | `chirayu-betkekar01/icp-product-workstation` |
+  | PLG | drive …/1flAnsCRhlrGUrxmgMVUbhgaoRUfLEE5b | `chirayu-betkekar01/PLG-GTM-Demo` |
+  | MEDDIC | drive …/1yymJQFpajdgqF2F32QFcTpcXSzRJDn3z | `chirayu-betkekar01/MEDDIC-Workflow` |
+  | SQL-MQL Jury | none | not on GitHub (its local folder has a `.env` with live keys; check `.gitignore` before ever publishing it) |
+  | CaseCraft | none (has a **Live demo** link instead: case-craft-six.vercel.app) | `chirayu-betkekar01/CaseCraft` |
+  | RFP Bid Qualification | none (**Live demo**: rfp-bid-qualification.vercel.app) | `chirayu-betkekar01/rfp-bid-qualification` |
+
+- ~~ICP card said n8n~~ **Resolved 2026-11-05:** the user confirmed it's Claude Skills with Flask; the
+  card's tags, Solution and flowchart were corrected to match the repo (see What I've Built, item 1).
 - Git init + connect to Vercel for actual deployment (not yet done). **Before deploying, deal with
   the stray files in the repo root** — `Notion Chirayu Pdf.pdf`, `Hubspot-Flywheel-Explained-768x494.webp`,
   `OIP.jpeg`, `Chirayu.png` and `1720487131212.jpeg` are working source material, not site assets, and a static host will serve them at
   a public URL. Either move them out of the deploy root or add a `.vercelignore`.
 - Decide whether to retire the old `Portfolio Website\` folder now that this one supersedes it.
+- A **700px+ export of the headshot cutout** (see Headshot: 340px display is under 2x).
+- `verify.py` is referenced throughout this file but is not in the repo. The 2026-11-05 redesign was
+  checked with an equivalent 46-check Playwright run (all passing) that also lives outside the repo.
+
+### Closed 2026-11-10
+- RFP Bid Qualification added as project 06 (Engage) with Live demo + GitHub links and a flowchart.
+  Engage now has three projects, so the filter bar reads Engage 3 and All projects 6. HTML only, so
+  no cache-bust (still `?v=15`).
+
+### Closed 2026-11-08
+- Palette switched to "Clay & Sand" (user picked it from a theme lab of light-only options). Tokens on
+  `:root`, the `.fw-seg` idle stroke moved to a new `--band` token, the button hover fallback and the
+  favicon updated. Layout and copy unchanged. Cache-bust `?v=15`.
+
+### Closed 2026-11-07
+- CaseCraft added as project 05 (Engage) with Live demo + GitHub links and a flowchart. Engage now
+  has two projects, so the filter bar reads Engage 2 and All projects 5. Cache-bust `?v=14`.
+- Removed the "GTM operator" chip from the top-left of the hero portrait card (user request), along
+  with its `.chip` CSS. The portrait card is now just the tinted background and the headshot. The
+  phrase still appears where the user wrote it, in the flywheel caption. Cache-bust `?v=13`.
+
+### Closed 2026-11-05
+- Database Republic (AI Consultant, Aug 2026 → Present) added as the newest role and to the hero
+  "Now" card. Cache-bust `?v=7`. The About bio is the user's verbatim copy and does not mention this
+  role; changing that is the user's call.
+- Dates corrected: Ecosystems.io Jul 2025 → Apr 2026, OpenEXA Apr 2026 → Jul 2026. Both left the
+  "Now" card, which now lists Database Republic only.
+- About bio paragraph 1 revised to include Database Republic (user approved draft "B"; see About Me).
+- "Refined Light" redesign shipped to the working tree (see Redesign 2026-11-05). Cache-bust `?v=6`.
+- Flowchart added to all three projects; flywheel kept, restyled, plus `.stage-links` text twins.
+- Verified: content counts, all images load, zero U+2014 in text/title/meta/aria/desc, every flywheel
+  label inside its band, segment and stage-link jumps (scroll, focus, flash, flash clears), Enter on a
+  segment, nav active state, no horizontal overflow at 1440/900/375/340, hamburger open/close at
+  375/340, state labels hidden at ≤380, reveal completes on scroll, no-JS renders visible, no
+  console errors.
 
 ### Closed 2026-09-20
 - Hero headline replaced with the stacked "People. Tech. Data."; hero subtext rewritten.

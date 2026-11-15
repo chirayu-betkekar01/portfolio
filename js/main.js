@@ -51,24 +51,58 @@ const revealObserver = new IntersectionObserver(
 
 document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
 
-// ---------- flywheel → project card ----------
-// The stage-to-project mapping lives in index.html, on each segment's href.
-// This only handles the jump; it never decides where a stage points.
-document.querySelectorAll('.fw-link').forEach((link) => {
-  link.addEventListener('click', (event) => {
-    const target = document.querySelector(link.getAttribute('href'));
-    if (!target) return; // unknown id: fall through to normal anchor behavior
+// ---------- flywheel → project filter ----------
+// Which stage a project belongs to lives in index.html, as data-stage on each
+// article.project. This only reads it; adding a project to a stage needs no JS change.
+const projects = [...document.querySelectorAll('.project[data-stage]')];
+const filterBar = document.getElementById('projectFilter');
+const filterStatus = document.getElementById('filterStatus');
+const filterBtns = [...document.querySelectorAll('.filter-btn')];
+const stageLinks = [...document.querySelectorAll('.fw-link[data-stage]')];
 
-    event.preventDefault();
-    target.scrollIntoView({
-      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
-      block: 'center',
-    });
-    target.focus({ preventScroll: true });
+const stageName = (stage) => stage.charAt(0).toUpperCase() + stage.slice(1);
+const countFor = (stage) =>
+  stage === 'all' ? projects.length : projects.filter((p) => p.dataset.stage === stage).length;
 
-    target.classList.remove('is-flash');
-    void target.offsetWidth; // restart the flash if the same stage is clicked twice
-    target.classList.add('is-flash');
-    window.setTimeout(() => target.classList.remove('is-flash'), 1600);
+let activeStage = 'all';
+
+function applyFilter(stage) {
+  activeStage = stage;
+  projects.forEach((p) => {
+    p.hidden = stage !== 'all' && p.dataset.stage !== stage;
   });
-});
+  filterBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === stage)));
+  stageLinks.forEach((l) => l.classList.toggle('is-active', l.dataset.stage === stage));
+
+  const n = countFor(stage);
+  filterStatus.textContent =
+    stage === 'all'
+      ? `Showing all ${n} projects`
+      : `Showing ${n} ${stageName(stage)} project${n === 1 ? '' : 's'}`;
+}
+
+if (filterBar && projects.length) {
+  filterBtns.forEach((btn) => {
+    const count = btn.querySelector('.filter-count');
+    if (count) count.textContent = countFor(btn.dataset.filter);
+    btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
+  });
+
+  // A segment filters to its stage and brings the results into view; clicking the
+  // stage that is already active goes back to all projects.
+  stageLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const stage = link.dataset.stage === activeStage ? 'all' : link.dataset.stage;
+      applyFilter(stage);
+      filterBar.scrollIntoView({
+        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+        block: 'start',
+      });
+      // Keyboard users land on the matching filter button, one Tab from the cards.
+      filterBtns.find((b) => b.dataset.filter === stage)?.focus({ preventScroll: true });
+    });
+  });
+
+  applyFilter('all');
+}

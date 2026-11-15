@@ -10,6 +10,7 @@ Hubspot-Flywheel-Explained-768x494.webp
 # Unprocessed logo originals. assets/logo-*.png are the cropped exports the site
 # actually uses; these are the raw files they were baked from.
 assets/aws.png
+assets/dbrepublic.png
 assets/ecosystems.webp
 assets/gcp.png
 assets/hubspot.png
